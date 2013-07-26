@@ -8,6 +8,9 @@ git add .
 
 git commit -a -m '1'
 
+git remote add origin hopi_cto@126.com:hopicto/hopi.git
+
+git push origin master
 
 情感词分析
 git clone https://github.com/felixzhao/context_analyzer.git context_analyzer
