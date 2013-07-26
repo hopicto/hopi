@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN"   
+"http://jetty.mortbay.org/configure.dtd">
+<Configure class="org.mortbay.jetty.webapp.WebAppContext">	
+	<New id="datasource" class="org.mortbay.jetty.plus.naming.Resource">		
+		<Arg>jdbc/ado</Arg>
+		<Arg>
+			<New class="org.apache.commons.dbcp.BasicDataSource">
+				<Set name="driverClassName">oracle.jdbc.driver.OracleDriver</Set>
+				<Set name="url">jdbc:oracle:thin:@129.25.98.127:1521:orcl</Set>
+				<Set name="username">ado</Set>
+				<Set name="password">laodong527</Set>
+			</New>
+		</Arg>
+	</New>	
+</Configure>

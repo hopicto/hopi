@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
+        "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+<urlrewrite>
+	<rule>
+		<note>test</note>
+		<from>/dyn/(.*)</from>
+		<to>/dmTest.do?code=$1</to>
+	</rule>
+	<rule>
+		<note>sample</note>
+		<from>/sample/(.*)</from>
+		<to>/kmSampleJs.do?code=$1</to>
+	</rule>
+</urlrewrite>

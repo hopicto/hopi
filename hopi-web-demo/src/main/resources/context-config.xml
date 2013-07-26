@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/hopi" />
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="jdbcExtractor"
+		class="org.springframework.jdbc.support.nativejdbc.SimpleNativeJdbcExtractor"
+		lazy-init="true">
+	</bean>
+	<!-- default begin -->
+	<bean id="cacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation">
+			<value>classpath:ehcache.xml</value>
+		</property>
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!--<tx:method name="*" rollback-for="Exception" />-->
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="daoPointcut" expression="execution(* *..dao.*.*(..))" />
+		<aop:advisor pointcut-ref="daoPointcut" advice-ref="txAdvice"
+			order="1" />
+	</aop:config>
+	<bean id="baseDao" class="com.hopi.dao.BaseDao" abstract="true">
+		<property name="dataSource" ref="dataSource" />
+		<property name="lobHandler" ref="lobHandler" />
+	</bean>
+	<bean id="lobHandler" class="org.springframework.jdbc.support.lob.OracleLobHandler"
+		lazy-init="true">
+		<property name="nativeJdbcExtractor" ref="jdbcExtractor" />
+	</bean>
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver" />
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages" />
+	</bean>
+	<!-- default end -->
+	<!--
+
+		wind dao <jee:jndi-lookup id="dataSourceWind" jndi-name="jdbc/wind" />
+		<bean id="transactionManagerWind"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceWind" /> </bean> <tx:advice
+		id="txAdviceWind" transaction-manager="transactionManager">
+		<tx:attributes> <tx:method name="*" read-only="true"/>
+		</tx:attributes> </tx:advice> <aop:config> <aop:pointcut
+		id="daoPointcutWind" expression="execution(* *..wind.*.*(..))" />
+		<aop:advisor pointcut-ref="daoPointcut" advice-ref="txAdvice"
+		order="1" /> </aop:config> <bean id="baseDaoWind"
+		class="com.hopi.dao.BaseDao" abstract="true"> <property
+		name="dataSource" ref="dataSourceWind" /> <property name="lobHandler"
+		ref="lobHandler" /> </bean> <bean id="windQueryDao"
+		class="com.ado.ds.sync.wind.WindQueryDao" parent="baseDaoWind" /> jydb
+		dao <jee:jndi-lookup id="dataSourceJydb" jndi-name="jdbc/jydb" />
+		<bean id="transactionManagerJydb"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceJydb" /> </bean> <tx:advice
+		id="txAdviceJydb" transaction-manager="transactionManager">
+		<tx:attributes> <tx:method name="*" read-only="true"/>
+		</tx:attributes> </tx:advice> <aop:config> <aop:pointcut
+		id="daoPointcutJydb" expression="execution(* *..jydb.*.*(..))" />
+		<aop:advisor pointcut-ref="daoPointcut" advice-ref="txAdvice"
+		order="1" /> </aop:config> <bean id="baseDaoJydb"
+		class="com.hopi.dao.BaseDao" abstract="true"> <property
+		name="dataSource" ref="dataSourceJydb" /> <property name="lobHandler"
+		ref="lobHandler" /> </bean>
+	-->
+	<!--
+		<bean id="jydbQueryDao" class="com.ado.ds.sync.jydb.JydbQueryDao"
+		parent="baseDaoJydb" /> sync service <bean id="dataSyncService"
+		class="com.ado.ds.sync.service.DataSyncServiceImp"> <property
+		name="queryDaoMap"> <map> <entry key="windQueryDao"
+		value-ref="windQueryDao"/> <entry key="jydbQueryDao"
+		value-ref="jydbQueryDao"/> </map> </property> </bean>
+	-->
+</beans>

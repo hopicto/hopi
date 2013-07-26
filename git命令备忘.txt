@@ -1,0 +1,13 @@
+下载安装git
+git config --global user.name "hopicto"
+git config --global user.email hopi_cto@126.com
+
+git init
+
+git add .
+
+git commit -a -m '1'
+
+
+情感词分析
+git clone https://github.com/felixzhao/context_analyzer.git context_analyzer

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 本地数据库 dao 基础设置开始-->
+	<bean id="dataSourceLocal" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.local.driverClassName}" />
+		<property name="url" value="${jdbc.local.url}" />
+		<property name="username" value="${jdbc.local.username}" />
+		<property name="password" value="${jdbc.local.password}" />
+	</bean>
+	<bean id="transactionManagerLocal"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceLocal" />
+	</bean>
+	<tx:advice id="txAdviceLocal" transaction-manager="transactionManagerLocal">
+		<tx:attributes>
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="daoPointcutLocal" expression="execution(* *..local.*.*(..))" />
+		<aop:advisor pointcut-ref="daoPointcutLocal" advice-ref="txAdviceLocal"
+			order="1" />
+	</aop:config>
+	<bean id="baseDaoLocal" class="com.ado.common.dao.BaseDao"
+		abstract="true">
+		<property name="dataSource" ref="dataSourceLocal" />
+		<property name="lobHandler" ref="lobHandler" />
+	</bean>
+</beans>

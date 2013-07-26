@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	<!--<import resource="classpath:context-common-default.xml" />-->
+	<import resource="classpath:hopi-web-dao-default.xml" />
+	<import resource="classpath:hopi-web-security-default.xml" />
+	<bean id="freeMarkerConfiguration"
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<property name="templateLoaderPath" value="classpath:templates/" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	<!--<bean id="dataTemplate" class="com.ado.common.template.FreeMarkerTemplate">
+		<property name="configuration" ref="freeMarkerConfiguration" />
+		<property name="templateSuffix" value=".ftl" />
+	</bean>
+	--><!--<bean id="iconDao" class="com.ado.rup.dao.IconDaoImp" parent="baseDao" />-->
+	<!-- rup begin 
+	<bean id="dmDataBaseDao" class="com.ado.rup.dao.DmDataBaseDaoImp"
+		parent="baseDao" />
+	<bean id="dmTableDao" class="com.ado.rup.dao.DmTableDaoImp"
+		parent="baseDao" />
+	<bean id="dmPropertyDao" class="com.ado.rup.dao.DmPropertyDaoImp"
+		parent="baseDao" />
+	<bean id="dmRelationDao" class="com.ado.rup.dao.DmRelationDaoImp"
+		parent="baseDao" />
+	<bean id="dmTableSpaceDao" class="com.ado.rup.dao.DmTableSpaceDaoImp"
+		parent="baseDao" />
+	<bean id="dmQueryDao" class="com.ado.rup.dao.DmQueryDaoImp"
+		parent="baseDao" />
+	<bean id="dmSyncWorkDao" class="com.ado.rup.dao.DmSyncWorkDaoImp"
+		parent="baseDao" />
+	<bean id="duComponentDao" class="com.ado.rup.dao.DuComponentDaoImp"
+		parent="baseDao" />
+	<bean id="duComponentPropertyDao" class="com.ado.rup.dao.DuComponentPropertyDaoImp"
+		parent="baseDao" />
+	 rup end 
+
+	<bean id="dsDataBaseDao" class="com.ado.ds.dao.DsDataBaseDaoImp"
+		parent="baseDao" />
+	<bean id="dsTableDao" class="com.ado.ds.dao.DsTableDaoImp" parent="baseDao" />
+	<bean id="dsPropertyDao" class="com.ado.ds.dao.DsPropertyDaoImp"
+		parent="baseDao" />
+	<bean id="dsWorkDao" class="com.ado.ds.dao.DsWorkDaoImp" parent="baseDao" />
+	<bean id="dsWorkCategoryDao" class="com.ado.ds.dao.DsWorkCategoryDaoImp"
+		parent="baseDao" />
+	<bean id="dsWorkItemDao" class="com.ado.ds.dao.DsWorkItemDaoImp"
+		parent="baseDao" />
+	 km 
+	<bean id="kmSampleDao" class="com.ado.km.dao.KmSampleDaoImp"
+		parent="baseDao" />
+	 xr 
+	<bean id="xrModuleDao" class="com.ado.xreport.dao.XrModuleDaoImp"
+		parent="baseDao" />
+	<bean id="xrTemplateDao" class="com.ado.xreport.dao.XrTemplateDaoImp"
+		parent="baseDao" />
+	 xflow 
+	<bean id="xfNodeDao" class="com.ado.xflow.dao.XfNodeDaoImp"
+		parent="baseDao" />
+	 afa 
+	<bean id="assetAllocationPropsDao" class="com.ado.afa.dao.AssetAllocationPropsDaoImp"
+		parent="baseDao" />
+	<bean id="assetAllocationService" class="com.ado.afa.service.AssetAllocationServiceImp">
+		<property name="assetAllocationPropsDao" ref="assetAllocationPropsDao" />
+	</bean>
+
+	 pf 
+	<bean id="pfModelPortfolioDao" class="com.ado.pf.dao.PfModelPortfolioDaoImp"
+		parent="baseDao" />
+	<bean id="pfStrategyRuleVarDao" class="com.ado.pf.dao.PfStrategyRuleVarDaoImp"
+		parent="baseDao" />
+
+	 产品服务 
+	<bean id="psProductDao" class="com.ado.ps.dao.PsProductDaoImp"
+		parent="baseDao" />
+	<bean id="psStockTrackConfigDao" class="com.ado.ps.dao.PsStockTrackConfigDaoImp"
+		parent="baseDao" />
+	<bean id="psStockTrackDao" class="com.ado.ps.dao.PsStockTrackDaoImp"
+		parent="baseDao" />
+--></beans>

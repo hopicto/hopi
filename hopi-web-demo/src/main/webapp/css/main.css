@@ -1,0 +1,313 @@
+@CHARSET "UTF-8";
+
+#main-viewport {
+	clear: both;
+	background: #dfe8f6;
+}
+
+#main-viewport-logo {	
+	float: left;	
+	margin-left:30px;
+	padding:5px;
+}
+
+#main-viewport-title {
+	font: bold 24px sans-serif;
+	color: #15428b;
+	float: left;
+	padding: 15px 0 0 5px;
+	vertical-align: middle;
+}
+
+#main-viewport-version {
+	font: 12px sans-serif;
+	color: #000000;
+	float: right;
+	line-height: 18px;
+	width: 200px;
+	padding: 3px 10px 5px 0px;
+}
+
+.icon-add {
+	background-image: url(../images/013.gif) !important;
+}
+
+.icon-edit {
+	background-image: url(../images/015.gif) !important;
+}
+
+.icon-reset {
+	background-image: url(../images/050.gif) !important;
+}
+
+.icon-delete {
+	background-image: url(../images/014.gif) !important;
+}
+
+.icon_view {
+	background-image: url(../images/016.gif) !important;
+}
+
+.icon-refresh {
+	background-image: url(../images/refresh.gif) !important;
+}
+
+.icon-save {
+	background-image: url(../images/save.gif) !important;
+}
+
+.icon-validate {
+	background-image: url(../images/021.gif) !important;
+}
+
+.icon-generate {
+	background-image: url(../images/022.gif) !important;
+}
+
+.icon-copy {
+	background-image: url(../images/031.gif) !important;
+}
+
+.icon-paste {
+	background-image: url(../images/027.gif) !important;
+}
+
+.icon-search {
+	background-image: url(../images/016.gif) !important;
+}
+
+.icon-magnifier {
+	background-image: url(../images/016.gif) !important;
+}
+
+.icon-setting {
+	background-image: url(../images/020.gif) !important;
+}
+
+.icon-settingCate {
+	background-image: url(../images/007.gif) !important;
+}
+
+.icon-logout {
+	background-image: url(../images/018.gif) !important;
+}
+
+.icon-sm {
+	background-image: url(../images/083.gif) !important;
+}
+
+.icon-nsm {
+	background-image: url(../images/084.gif) !important;
+}
+
+.icon-totopas {
+	background-image: url(../images/060.gif) !important;
+}
+
+.icon-untopas {
+	background-image: url(../images/043.gif) !important;
+}
+
+.icon-dictionary {
+	background-image: url(../images/113.gif) !important;
+}
+
+.icon-publish {
+	background-image: url(../images/237.gif) !important;
+}
+
+.icon-unpublish {
+	background-image: url(../images/238.gif) !important;
+}
+
+.icon-info {
+	background-image: url(../images/029.gif) !important;
+}
+
+.icon-value {
+	background-image: url(../images/069.gif) !important;
+}
+
+.icon-role {
+	background-image: url(../images/303.png) !important;
+}
+
+.icon-lock {
+	background-image: url(../images/022.gif) !important;
+}
+
+.icon-unlock {
+	background-image: url(../images/020.gif) !important;
+}
+
+.icon-changepass {
+	background-image: url(../images/306.png) !important;
+}
+
+.icon-resetpass {
+	background-image: url(../images/062.gif) !important;
+}
+
+.icon-release {
+	background-image: url(../images/069.gif) !important;
+}
+
+.icon-home {
+	background-image: url(../images/019.gif) !important;
+}
+
+.icon-customer-dist {
+	background-image: url(../images/307.png) !important;
+}
+
+.icon-customer-revise {
+	background-image: url(../images/153.gif) !important;
+}
+
+.icon-customer-caculate {
+	background-image: url(../images/156.gif) !important;
+}
+
+.icon-customer {
+	background-image: url(../images/308.png) !important;
+}
+
+.icon-portfolio {
+	background-image: url(../images/293.gif) !important;
+}
+
+.icon-reasonexp {
+	background-image: url(../images/309.png) !important;
+}
+
+.icon-close {
+	background-image: url(../images/178.gif) !important;
+}
+
+.icon-affix {
+	background-image: url(../images/063.gif) !important;
+}
+
+.icon-affix-man {
+	background-image: url(../images/306.png) !important;
+}
+
+.icon-view {
+	background-image: url(../images/037.gif) !important;
+}
+
+.icon-report {
+	background-image: url(../images/035.gif) !important;
+}
+
+.icon-import {
+	background-image: url(../images/081.gif) !important;
+}
+
+.icon-export {
+	background-image: url(../images/082.gif) !important;
+}
+
+.icon-profit {
+	background-image: url(../images/203.gif) !important;
+}
+
+.icon-editReason {
+	background-image: url(../images/010.gif) !important;
+}
+
+.icon-message {
+	background-image: url(../images/234.gif) !important;
+}
+
+.icon-chart-column {
+	background-image: url(../images/197.gif) !important;
+}
+
+.icon-ylb{
+	background-image: url(../images/ylb_min.gif) !important;
+}
+.icon-logo{
+	background-image: url(../images/logo.png) !important;
+}
+.icon-logo-min{
+	background-image: url(../images/logo-min.png) !important;
+}
+.info_item_title {
+	font-weight: bold;
+	font-size: 20px;
+	font-family: 楷体_GB2312;
+	color: #3366FF
+}
+
+.info_table {
+	line-height: 20px;
+	font-size: 10pt;
+	border-color: #600;
+	border-style: solid;
+	border-width: 1px;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.info_table_lable {
+	font-weight: bold;
+	text-align: right;
+	border-color: #600;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.info_table_content {
+	text-align: left;
+	padding: 5px;
+	border-color: #600;
+	border-style: solid;
+	border-width: 1px;
+	valign: top;
+	word-wrap: break-word;
+	word-break: normal;
+}
+
+#images-view .thumb img{
+    height: 60px;
+    width: 80px;
+}
+#images-view .thumb-wrap{
+    float: left;
+    margin: 4px;
+    margin-right: 0;
+    padding: 5px;
+}
+#images-view .thumb-wrap span {
+    
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    width: 86px;
+}
+
+#images-view .x-item-over{
+    border:1px solid #dddddd;
+    background: #efefef url(images/over.gif) repeat-x left top;
+    padding: 4px;
+}
+
+#images-view .x-item-selected{
+    background: #eff5fb url(images/selected.gif) no-repeat right bottom;
+    border:1px solid #99bbe8;
+    padding: 4px;
+}
+#images-view .x-item-selected .thumb{
+    background:transparent;
+}
+
+/**
+报表模板设置
+**/
+.xrTemplateModule{		
+	position:absolute;
+}
+.xrTemplateModuleHighLight{
+	border:1px solid red;	
+}

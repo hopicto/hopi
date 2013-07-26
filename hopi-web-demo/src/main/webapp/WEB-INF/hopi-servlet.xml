@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config.properties</value>
+			</list>
+		</property>
+	</bean>
+	<import resource="classpath:hopi-web-action-default.xml" />
+	<!--
+		<bean id="simpleMappingExceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings"> <props> <prop
+		key="java.lang.Exception">error</prop> </props> </property> </bean>
+	
+		-->
+	<!--<bean name="/fusion.do" class="com.ado.demo.action.FusionAction"
+		parent="baseAction">
+	</bean>
+	<bean name="/icon.do" class="com.ado.rup.web.IconAction" parent="baseAction">
+		<property name="iconDao" ref="iconDao" />
+	</bean>
+	<bean name="/dsDataBase.do" class="com.ado.ds.web.DsDataBaseAction"
+		parent="baseAction">
+		<property name="dsDataBaseDao" ref="dsDataBaseDao" />
+	</bean>
+	<bean name="/dsTable.do" class="com.ado.ds.web.DsTableAction"
+		parent="baseAction">
+		<property name="dsDataBaseDao" ref="dsDataBaseDao" />
+		<property name="dsTableDao" ref="dsTableDao" />
+	</bean>
+	<bean name="/dsProperty.do" class="com.ado.ds.web.DsPropertyAction"
+		parent="baseAction">
+		<property name="dsPropertyDao" ref="dsPropertyDao" />
+	</bean>
+	<bean name="/dsWork.do" class="com.ado.ds.web.DsWorkAction"
+		parent="baseAction">
+		<property name="dsWorkDao" ref="dsWorkDao" />
+	</bean>
+	<bean name="/dsWorkCategory.do" class="com.ado.ds.web.DsWorkCategoryAction"
+		parent="baseAction">
+		<property name="dsWorkCategoryDao" ref="dsWorkCategoryDao" />
+	</bean>
+	<bean name="/dsWorkItem.do" class="com.ado.ds.web.DsWorkItemAction"
+		parent="baseAction">
+		<property name="dsWorkItemDao" ref="dsWorkItemDao" />
+	</bean>
+	<bean name="/dmDataBase.do" class="com.ado.rup.web.DmDataBaseAction"
+		parent="baseAction">
+		<property name="dmDataBaseDao" ref="dmDataBaseDao" />
+		<property name="dmTableDao" ref="dmTableDao" />
+		<property name="dmRelationDao" ref="dmRelationDao" />
+		<property name="dmTableSpaceDao" ref="dmTableSpaceDao" />
+	</bean>
+	<bean name="/dmTable.do" class="com.ado.rup.web.DmTableAction"
+		parent="baseAction">
+		<property name="dmTableDao" ref="dmTableDao" />
+		<property name="dmPropertyDao" ref="dmPropertyDao" />
+	</bean>
+	<bean name="/dmProperty.do" class="com.ado.rup.web.DmPropertyAction"
+		parent="baseAction">
+		<property name="dmPropertyDao" ref="dmPropertyDao" />
+	</bean>
+	<bean name="/dmRelation.do" class="com.ado.rup.web.DmRelationAction"
+		parent="baseAction">
+		<property name="dmRelationDao" ref="dmRelationDao" />
+	</bean>
+	<bean name="/dmTableSpace.do" class="com.ado.rup.web.DmTableSpaceAction"
+		parent="baseAction">
+		<property name="dmTableSpaceDao" ref="dmTableSpaceDao" />
+	</bean>
+	<bean name="/dmQuery.do" class="com.ado.rup.web.DmQueryAction"
+		parent="baseAction">
+		<property name="dmQueryDao" ref="dmQueryDao" />
+		<property name="dmPropertyDao" ref="dmPropertyDao" />
+	</bean>
+
+	<bean name="/dmSyncWork.do" class="com.ado.rup.web.DmSyncWorkAction"
+		parent="baseAction">
+		<property name="dmSyncWorkDao" ref="dmSyncWorkDao" />
+	</bean>
+
+	<bean name="/duComponent.do" class="com.ado.rup.web.DuComponentAction"
+		parent="baseAction">
+		<property name="duComponentDao" ref="duComponentDao" />
+	</bean>
+	<bean name="/duComponentProperty.do" class="com.ado.rup.web.DuComponentPropertyAction"
+		parent="baseAction">
+		<property name="duComponentPropertyDao" ref="duComponentPropertyDao" />
+	</bean>
+
+	<bean name="/dmTest.do" class="com.ado.rup.web.DmTestAction">
+		<property name="dataTemplate" ref="dataTemplate" />
+	</bean>
+
+	<bean name="/photoView.do" class="com.ado.rup.web.PhotoViewAction"
+		parent="baseAction">
+	</bean>
+
+	 demo 
+	<bean name="/demoPort.do" class="com.ado.demo.action.PortfolioAction"
+		parent="baseAction">
+	</bean>
+	 km 
+	<bean name="/kmSample.do" class="com.ado.km.web.KmSampleAction"
+		parent="baseAction">
+		<property name="kmSampleDao" ref="kmSampleDao" />
+	</bean>
+	<bean name="/kmSampleJs.do" class="com.ado.km.web.KmSampleJsAction">
+		<property name="kmSampleDao" ref="kmSampleDao" />
+	</bean>
+	<bean name="/kmSampleData.do" class="com.ado.km.web.KmSampleDataAction">
+	</bean>
+
+	 xr 
+	<bean name="/xrModule.do" class="com.ado.xreport.web.XrModuleAction"
+		parent="baseAction">
+		<property name="xrModuleDao" ref="xrModuleDao" />
+	</bean>
+	<bean name="/xrTemplate.do" class="com.ado.xreport.web.XrTemplateAction"
+		parent="baseAction">
+		<property name="xrTemplateDao" ref="xrTemplateDao" />
+	</bean>
+
+	 xm 
+	<bean name="/xmIndex.do" class="com.ado.xm.web.XmIndexAction"
+		parent="baseAction">
+	</bean>
+
+	 afa 
+	<bean name="/afaAssetAllocation.do" class="com.ado.afa.web.AssetAllocationAction"
+		parent="baseAction">
+		<property name="assetAllocationService" ref="assetAllocationService" />
+	</bean>
+	<bean name="/afaAssetAllocationProps.do" class="com.ado.afa.web.AssetAllocationPropsAction"
+		parent="baseAction">
+		<property name="assetAllocationPropsDao" ref="assetAllocationPropsDao" />
+	</bean>
+
+	 xflow 
+	<bean name="/xfFlow.do" class="com.ado.xflow.web.XfFlowAction"
+		parent="baseAction">
+		<property name="xfNodeDao" ref="xfNodeDao" />
+	</bean>
+
+	 pf 
+	<bean name="/pfModelPortfolio.do" class="com.ado.pf.web.PfModelPortfolioAction"
+		parent="baseAction">
+		<property name="pfModelPortfolioDao" ref="pfModelPortfolioDao" />
+	</bean>
+
+	<bean name="/pfStrategyRuleVar.do" class="com.ado.pf.web.PfStrategyRuleVarAction"
+		parent="baseAction">
+		<property name="pfStrategyRuleVarDao" ref="pfStrategyRuleVarDao" />
+	</bean>
+
+	 产品服务ps 
+	<bean name="/psProduct.do" class="com.ado.ps.web.PsProductAction"
+		parent="baseAction">
+		<property name="psProductDao" ref="psProductDao" />
+	</bean>
+	<bean name="/psStockTrackConfig.do" class="com.ado.ps.web.PsStockTrackConfigAction"
+		parent="baseAction">
+		<property name="psStockTrackConfigDao" ref="psStockTrackConfigDao" />
+	</bean>
+	<bean name="/psStockTrack.do" class="com.ado.ps.web.PsStockTrackAction"
+		parent="baseAction">
+		<property name="psStockTrackDao" ref="psStockTrackDao" />
+	</bean>
+
+	--><!--
+		<bean id="reportViewResolver"
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsViewResolver">
+		<property name="viewClass"
+		value="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView"
+		/> <property name="prefix" value="/WEB-INF/reports/" /> <property
+		name="suffix" value=".jrxml" /> <property name="order" value="2" />
+		<property name="viewNames"> <list> <value>report</value>
+		<value>myreport</value> </list> </property> </bean> <bean
+		id="htmlViewResolver"
+		class="com.xyzq.common.web.HtmlReportViewResolver"> <property
+		name="viewPrefix" value="html_" /> <property name="prefix"
+		value="/WEB-INF/report_his/" /> <property name="order" value="3" />
+		<property name="suffix" value=".htm" /> </bean>
+	-->
+</beans>
