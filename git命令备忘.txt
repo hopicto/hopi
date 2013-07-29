@@ -4,6 +4,8 @@ git config --global user.email hopi_cto@126.com
 
 git init
 
+git status
+
 git add .
 
 git commit -a -m '1'
