@@ -1,0 +1,12 @@
+,sum(case when t_cp.cplx='非核心-公募-股票型' and t_gx.ywlb='4' then tmp_sfje_y*jxbl*0.8
+			  when t_cp.cplx='核心-公募-股票型' and t_gx.ywlb='4' then tmp_sfje_y*jxbl*1
+			  when t_cp.cplx='基金专户-股票型' and t_gx.ywlb='5' then tmp_sfje_y*jxbl*1
+			  when t_cp.cplx='集合理财-股票型' and t_gx.ywlb='6' then tmp_sfje_y*jxbl*1			  
+			  when t_cp.cplx='公募-债券型-有手续费' and t_gx.ywlb='4' then tmp_sfje_y*jxbl*0.4
+			  when t_cp.cplx='基金专户-债券型' and t_gx.ywlb='5' then tmp_sfje_y*jxbl*0.5
+			  when t_cp.cplx='集合理财-债券型' and t_gx.ywlb='6' then tmp_sfje_y*jxbl*0.5			  
+			  when t_cp.cplx in ('公募-债券型-无手续费','公募-货币型') and t_gx.ywlb='4' then tmp_sfje_y*jxbl*0.1
+			  when t_cp.cplx='基金专户-货币型' and t_gx.ywlb='5' then tmp_sfje_y*jxbl*0.1
+			  when t_cp.cplx='集合理财-货币型' and t_gx.ywlb='6' then tmp_sfje_y*jxbl*0.1
+			 else 0 end
+		) as 销售金额_月累计_首发_考核
