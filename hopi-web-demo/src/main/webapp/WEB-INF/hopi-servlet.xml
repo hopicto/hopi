@@ -19,6 +19,11 @@
 		</property>
 	</bean>
 	<import resource="classpath:hopi-web-action-default.xml" />
+	
+	<bean name="/demo.do" class="com.hopi.demo.web.DemoAction"
+		parent="baseAction">		
+	</bean>
+	
 	<!--
 		<bean id="simpleMappingExceptionResolver"
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">

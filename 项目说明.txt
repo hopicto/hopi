@@ -11,3 +11,6 @@ mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=co
 
 web demo
 mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.hopi -DartifactId=hopi-web-demo
+
+hopi query
+mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.hopi -DartifactId=hopi-query

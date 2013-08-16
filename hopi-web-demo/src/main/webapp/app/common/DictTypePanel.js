@@ -2,7 +2,7 @@
  * 增删改查面板
  */
 Ext.define('Hopi.common.DictTypePanel', {
-	extend : 'Hopi.common.CrudPanel',
+	extend : 'Hopi.common.CrudMainPanel',
 	title : '类型字典管理',
 	baseUrl : 'dictType.do?method=',
 	nameSuffix : '类型字典',
@@ -36,17 +36,7 @@ Ext.define('Hopi.common.DictTypePanel', {
 		dataIndex : 'DESCRIPTION'
 	} ],
 	createForm : function() {
-		var formPanel = new Ext.form.FormPanel( {
-			frame : true,
-			labelWidth : 80,
-			labelAlign : 'right',
-			border : false,
-			method : 'post',
-			defaultType : 'textfield',
-			layout : 'anchor',
-			defaults : {
-				anchor : '100%'
-			},
+		var formPanel=Ext.create('Hopi.common.CrudDataForm', {
 			items : [ {
 				name : '_EDIT_TAG',
 				xtype : 'hidden'
@@ -80,14 +70,15 @@ Ext.define('Hopi.common.DictTypePanel', {
 				width : 200,
 				height : 60
 			} ]
-		});
+		});		
 		return formPanel;
 	},
 	createWin : function() {
 		return this.initWin(360);
 	},
 	initComponent : function() {
-		this.queryForm = Ext.create('Hopi.common.SearchFormPanel', {
+		this.highQueryForm = Ext.create('Hopi.common.CrudHighQueryForm', {	
+			crudMainPanel:this,
 			items : [ {
 				fieldLabel : '类别名称',
 				name : 'TYPE'
@@ -104,6 +95,10 @@ Ext.define('Hopi.common.DictTypePanel', {
 				fieldLabel : '显示序号',
 				name : 'SEQ'
 			} ]
+		});	
+		this.toolBar=Ext.create("Hopi.common.CrudToolBar", {
+			crudMainPanel:this,
+			items:[]
 		});
 		this.callParent();
 	}

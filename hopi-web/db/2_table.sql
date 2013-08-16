@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      ORACLE Version 10g                           */
-/* Created on:     2013/7/24 13:45:37                           */
+/* Created on:     2013/8/14 18:27:26                           */
 /*==============================================================*/
 
 
@@ -18,6 +18,9 @@ alter table HW_POSITION_ROLE
 
 alter table HW_POSITION_ROLE
    drop constraint FK_HW_POSITION_ROLE_R;
+
+alter table HW_RESOURCE
+   drop constraint FK_HW_RESOURCE_SELF;
 
 alter table HW_ROLE_RESOURCE
    drop constraint FK_HW_ROLE_RESOUCE_RE;
@@ -60,6 +63,7 @@ drop table HW_STAFF_POSITION cascade constraints;
 create table HW_ACCESS_LOG  (
    STAFF_ID             VARCHAR2(36)                    not null,
    ACCESS_TIME          DATE                            not null,
+   ACCESS_IP            VARCHAR2(50),
    constraint PK_HW_ACCESS_LOG primary key (STAFF_ID, ACCESS_TIME)
 );
 
@@ -130,7 +134,7 @@ create table HW_RESOURCE  (
    SEQ                  NUMBER(5),
    LEAF                 NUMBER(1),
    DESCRIPTION          VARCHAR2(200),
-   PARENT_ID            NUMBER(9),
+   PARENT_ID            VARCHAR2(36),
    CONTENT              VARCHAR2(200),
    EXT_PROP             VARCHAR2(200),
    ICON_ID              NUMBER(9),
@@ -213,6 +217,11 @@ alter table HW_POSITION_ROLE
 alter table HW_POSITION_ROLE
    add constraint FK_HW_POSITION_ROLE_R foreign key (ROLE_ID)
       references HW_ROLE (ID)
+      on delete cascade;
+
+alter table HW_RESOURCE
+   add constraint FK_HW_RESOURCE_SELF foreign key (PARENT_ID)
+      references HW_RESOURCE (ID)
       on delete cascade;
 
 alter table HW_ROLE_RESOURCE
