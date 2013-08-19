@@ -64,6 +64,10 @@
 		parent="baseAction">
 		<property name="dictDao" ref="dictDao" />
 	</bean>
+	<bean name="/iconClass.do" class="com.hopi.web.action.IconClassAction"
+		parent="baseAction">
+		<property name="iconClassDao" ref="iconClassDao" />
+	</bean>
 	<!--<bean name="/org.do" class="com.hopi.web.OrgAction" parent="baseAction">
 		<property name="orgDao" ref="orgDao" />
 	</bean>

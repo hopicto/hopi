@@ -26,26 +26,54 @@ public class DictTypeAction extends MultiActionController {
 		this.dictDao = dictDao;
 	}
 
+	public ModelAndView importData(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		return null;
+	}
+
+	public ModelAndView exportData(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Map result = new HashMap();
+		String orderBy = request.getParameter("orderBy");
+		String orderType = request.getParameter("orderType");
+		Map hsMap = QueryParamMapUtil.getQueryParamMap(
+				WebConstants.HIGH_SEARCH_PREFIX, request.getParameterMap());
+		String sv = request.getParameter("sv");
+		List data = dictDao.queryDictTypeForList(sv, hsMap, orderBy, orderType);
+
+		String[] headConfig = new String[] { "分类名称", "分类代码", "元素名称", "元素编码",
+				"元素值", "序号" };
+		String[] dataConfig = new String[] { "TYPE", "TYPE_CODE", "ITEM",
+				"ITEM_CODE", "ITEM_VALUE", "SEQ" };
+		result.put(WebConstants.EXCEL_VIEW_FILE_NAME, "数据类别字典.xls");
+		result.put(WebConstants.EXCEL_VIEW_HEAD_CONFIG, headConfig);
+		result.put(WebConstants.EXCEL_VIEW_DATA_CONFIG, dataConfig);
+		result.put(WebConstants.EXCEL_VIEW_DATA, data);
+		return new ModelAndView(WebConstants.EXCEL_VIEW, result);
+	}
+
 	public ModelAndView query(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws Exception {
 		String limit = request.getParameter("limit");
 		String start = request.getParameter("start");
 		String orderBy = request.getParameter("orderBy");
 		String orderType = request.getParameter("orderType");
-		Map hsMap=QueryParamMapUtil.getQueryParamMap(WebConstants.HIGH_SEARCH_PREFIX, request.getParameterMap());
-		String sv = request.getParameter("sv");		
+		Map hsMap = QueryParamMapUtil.getQueryParamMap(
+				WebConstants.HIGH_SEARCH_PREFIX, request.getParameterMap());
+		String sv = request.getParameter("sv");
 		long pageSize = limit == null ? WebConstants.PAGE_SIZE_DEFAULT : Long
 				.parseLong(limit);
 		long pageStart = start == null || "".equals(start) ? 0 : Long
 				.parseLong(start);
-		Page page = dictDao.queryDictTypeForPage(sv,hsMap,pageStart, pageSize,
-				orderBy, orderType);
+		Page page = dictDao.queryDictTypeForPage(sv, hsMap, pageStart,
+				pageSize, orderBy, orderType);
 		return new ModelAndView(WebConstants.JSON_VIEW,
 				WebConstants.JSON_CLEAN, page);
 	}
 
 	public ModelAndView save(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws Exception {
 		Map param = new HashMap();
 		String id = request.getParameter("ID");
 		param.put("TYPE", request.getParameter("TYPE"));
@@ -68,7 +96,7 @@ public class DictTypeAction extends MultiActionController {
 	}
 
 	public ModelAndView delete(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		if (id != null) {
 			if (id.indexOf(",") > 0) {
@@ -82,7 +110,7 @@ public class DictTypeAction extends MultiActionController {
 	}
 
 	public ModelAndView edit(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		Map role = dictDao.getById(TB_NAME, id);
 		Map resultMap = new HashMap();

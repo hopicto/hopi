@@ -9,20 +9,23 @@ import com.hopi.dao.Dao;
 import com.hopi.dao.Page;
 
 public interface DictDao extends Dao {
-	Page queryDictTypeForPage(String sv,Map hsMap, long start, long limit,
+	Page queryDictTypeForPage(String sv, Map hsMap, long start, long limit,
 			String orderBy, String orderType) throws DataAccessException;
+
+	List queryDictTypeForList(String sv, Map hsMap, String orderBy,
+			String orderType) throws DataAccessException;
 
 	List findAllDictType() throws DataAccessException;
 
 	List findDictTypeByCode(String code) throws DataAccessException;
-	
-//	/**
-//	 * 根据客户识别分数获取客户风险特征
-//	 * @param score
-//	 * @return {ITEM:风险特征,DESCRIPTION:风险特征描述}
-//	 * @throws DataAccessException
-//	 */
-//	Map getCustomerRiskType(BigDecimal score)throws DataAccessException;
-	
-//	String getFileDownloadType(String suffix)throws DataAccessException;
+
+	// /**
+	// * 根据客户识别分数获取客户风险特征
+	// * @param score
+	// * @return {ITEM:风险特征,DESCRIPTION:风险特征描述}
+	// * @throws DataAccessException
+	// */
+	// Map getCustomerRiskType(BigDecimal score)throws DataAccessException;
+
+	// String getFileDownloadType(String suffix)throws DataAccessException;
 }

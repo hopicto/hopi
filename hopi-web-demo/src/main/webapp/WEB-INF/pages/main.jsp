@@ -49,6 +49,7 @@ function openTab(config,extparams){
 			//Ext.apply(pe,extparams);						
 			var p=mainViewport.tabPanel.add(pe);
 			mainViewport.tabPanel.setActiveTab(p);
+			return p;
 		}					
 	}
 }

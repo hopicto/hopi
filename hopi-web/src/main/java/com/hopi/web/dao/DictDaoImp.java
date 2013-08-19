@@ -20,16 +20,16 @@ public class DictDaoImp extends BaseDao implements DictDao {
 		Map param = new HashMap();
 		if (hsMap != null && hsMap.size() > 0) {
 			sql.append(" and (");
-			int hi=0;
-			for(Iterator it=hsMap.entrySet().iterator();it.hasNext();){
-				Entry entry=(Entry)it.next();
-				String key=(String)entry.getKey();
-				String value=(String)entry.getValue();
-				if(hi>0){
+			int hi = 0;
+			for (Iterator it = hsMap.entrySet().iterator(); it.hasNext();) {
+				Entry entry = (Entry) it.next();
+				String key = (String) entry.getKey();
+				String value = (String) entry.getValue();
+				if (hi > 0) {
 					sql.append(" or ");
 				}
-				sql.append(key).append(" like :").append(key);				
-				param.put(key, value);				
+				sql.append(key).append(" like :").append(key);
+				param.put(key, value);
 				hi++;
 			}
 			sql.append(")");
@@ -49,7 +49,7 @@ public class DictDaoImp extends BaseDao implements DictDao {
 				sql.append(" ").append(orderType);
 			}
 		}
-		log.info("sql="+sql);
+		// log.info("sql="+sql);
 		return this.queryForPage(start, limit, sql.toString(), param);
 	}
 
@@ -64,6 +64,45 @@ public class DictDaoImp extends BaseDao implements DictDao {
 		Map param = new HashMap();
 		param.put("code", code);
 		return this.getJdbcTemplate().queryForList(sql, param);
+	}
+
+	public List queryDictTypeForList(String sv, Map hsMap, String orderBy,
+			String orderType) throws DataAccessException {
+		StringBuffer sql = new StringBuffer(
+				"select * from HW_DICT_TYPE where 1=1");
+		Map param = new HashMap();
+		if (hsMap != null && hsMap.size() > 0) {
+			sql.append(" and (");
+			int hi = 0;
+			for (Iterator it = hsMap.entrySet().iterator(); it.hasNext();) {
+				Entry entry = (Entry) it.next();
+				String key = (String) entry.getKey();
+				String value = (String) entry.getValue();
+				if (hi > 0) {
+					sql.append(" or ");
+				}
+				sql.append(key).append(" like :").append(key);
+				param.put(key, value);
+				hi++;
+			}
+			sql.append(")");
+		} else if (sv != null && !"".equals(sv)) {
+			sql.append(" and (TYPE like :sv or ITEM like :sv)");
+			param.put("sv", "%" + sv + "%");
+		}
+		//
+		// if (queryKey != null && !"".equals(queryKey)) {
+		// sql.append(" and name like :name");
+		// param.put("name", "%" + queryKey + "%");
+		// }
+
+		if (orderBy != null && !"".equals(orderBy)) {
+			sql.append(" order by ").append(orderBy);
+			if (orderType != null && !"".equals(orderType)) {
+				sql.append(" ").append(orderType);
+			}
+		}
+		return this.queryForListAll(sql.toString(), param);
 	}
 
 	// public String getFileDownloadType(String suffix) throws

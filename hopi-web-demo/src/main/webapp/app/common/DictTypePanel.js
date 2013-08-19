@@ -35,50 +35,9 @@ Ext.define('Hopi.common.DictTypePanel', {
 		sortable : false,
 		dataIndex : 'DESCRIPTION'
 	} ],
-	createForm : function() {
-		var formPanel=Ext.create('Hopi.common.CrudDataForm', {
-			items : [ {
-				name : '_EDIT_TAG',
-				xtype : 'hidden'
-			}, {
-				name : 'ID',
-				xtype : 'hidden'
-			}, {
-				fieldLabel : '类别名称',
-				name : 'TYPE',
-				allowBlank : false
-			}, {
-				fieldLabel : '类别编码',
-				name : 'TYPE_CODE',
-				allowBlank : false
-			}, {
-				fieldLabel : '元素名称',
-				name : 'ITEM',
-				allowBlank : false
-			}, {
-				fieldLabel : '元素编码',
-				name : 'ITEM_CODE',
-				allowBlank : false
-			}, {
-				fieldLabel : '显示序号',
-				name : 'SEQ',
-				allowBlank : false
-			}, {
-				fieldLabel : '描述',
-				name : 'DESCRIPTION',
-				xtype : 'textarea',
-				width : 200,
-				height : 60
-			} ]
-		});		
-		return formPanel;
-	},
-	createWin : function() {
-		return this.initWin(360);
-	},
 	initComponent : function() {
-		this.highQueryForm = Ext.create('Hopi.common.CrudHighQueryForm', {	
-			crudMainPanel:this,
+		this.highQueryForm = Ext.create('Hopi.common.CrudHighQueryForm', {
+			crudMainPanel : this,
 			items : [ {
 				fieldLabel : '类别名称',
 				name : 'TYPE'
@@ -95,11 +54,55 @@ Ext.define('Hopi.common.DictTypePanel', {
 				fieldLabel : '显示序号',
 				name : 'SEQ'
 			} ]
-		});	
-		this.toolBar=Ext.create("Hopi.common.CrudToolBar", {
-			crudMainPanel:this,
-			items:[]
+		});
+		//弹出窗口
+		this.dataFormSetting={
+			type:1,
+			width:360			
+		};
+//		//页签式		
+//		this.dataFormSetting={
+//			type:2,
+//			panelName:this.self.getName()		
+//		};
+		this.dataFormItems = [ {
+			name : '_EDIT_TAG',
+			xtype : 'hidden'
+		}, {
+			name : 'ID',
+			xtype : 'hidden'
+		}, {
+			fieldLabel : '类别名称',
+			name : 'TYPE',
+			allowBlank : false
+		}, {
+			fieldLabel : '类别编码',
+			name : 'TYPE_CODE',
+			allowBlank : false
+		}, {
+			fieldLabel : '元素名称',
+			name : 'ITEM',
+			allowBlank : false
+		}, {
+			fieldLabel : '元素编码',
+			name : 'ITEM_CODE',
+			allowBlank : false
+		}, {
+			fieldLabel : '显示序号',
+			name : 'SEQ',
+			allowBlank : false
+		}, {
+			fieldLabel : '描述',
+			name : 'DESCRIPTION',
+			xtype : 'textarea',
+			width : 200,
+			height : 60
+		} ];
+		this.toolBar = Ext.create("Hopi.common.CrudToolBar", {
+			crudMainPanel : this,
+			items : []
 		});
 		this.callParent();
+
 	}
 });

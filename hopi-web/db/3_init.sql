@@ -51,6 +51,7 @@ insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('3'
 insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('4','资源权限管理','ZYQXGL','2',2,'2','Hopi.common.ResourcePanel',1);
 insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('5','人员组织管理','RYGL','2',3,'2','Hopi.common.OrgPanel',1);
 insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('6','角色管理','JSGL','2',4,'2','Hopi.common.RolePanel',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('7','图标类别管理','TBLB','2',5,'2','Hopi.common.IconClassPanel',1);
 
 --insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('8','图标管理','TBGL',2,5,2,'Ado.jcpt.IconPanel',1);
 

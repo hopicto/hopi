@@ -96,4 +96,5 @@ public class WebConstants {
 	public static final int TOOLBAR_REFRESH = 5;//刷新
 	public static final int TOOLBAR_QUERY = 6;//查询
 	public static final int TOOLBAR_HIGHQUERY = 7;//高级查询
+	public static final int TOOLBAR_IMPORT = 8;//导入
 }
