@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      ORACLE Version 10g                           */
-/* Created on:     2013/8/14 18:27:26                           */
+/* Created on:     2013/8/20 17:43:37                           */
 /*==============================================================*/
 
 
@@ -43,6 +43,8 @@ drop table HW_DEPARTMENT cascade constraints;
 
 drop table HW_DICT_TYPE cascade constraints;
 
+drop table HW_ICON_CLASS cascade constraints;
+
 drop table HW_POSITION cascade constraints;
 
 drop table HW_POSITION_ROLE cascade constraints;
@@ -54,6 +56,10 @@ drop table HW_ROLE cascade constraints;
 drop table HW_ROLE_RESOURCE cascade constraints;
 
 drop table HW_STAFF cascade constraints;
+
+drop table HW_STAFF_MENU cascade constraints;
+
+drop table HW_STAFF_PAGE cascade constraints;
 
 drop table HW_STAFF_POSITION cascade constraints;
 
@@ -78,6 +84,7 @@ create table HW_DEPARTMENT  (
    SEQ                  NUMBER(5),
    DESCRIPTION          VARCHAR2(200),
    PARENT_ID            VARCHAR2(36),
+   ICON_CLASS           VARCHAR2(50),
    constraint PK_HW_DEPARTMENT primary key (ID)
 );
 
@@ -100,6 +107,18 @@ create table HW_DICT_TYPE  (
 
 comment on table HW_DICT_TYPE is
 '类别字典，类别选项值用ID表示。类别字典不删除，只添加和修改。';
+
+/*==============================================================*/
+/* Table: HW_ICON_CLASS                                         */
+/*==============================================================*/
+create table HW_ICON_CLASS  (
+   ID                   VARCHAR2(36)                    not null,
+   CODE                 VARCHAR2(50)                    not null,
+   NAME                 VARCHAR2(50),
+   ICON_NAME            VARCHAR2(50),
+   constraint PK_HW_ICON_CLASS primary key (ID),
+   constraint AK_HW_ICON_CODE_UNIQU_HW_ICON_ unique (CODE)
+);
 
 /*==============================================================*/
 /* Table: HW_POSITION                                           */
@@ -137,7 +156,7 @@ create table HW_RESOURCE  (
    PARENT_ID            VARCHAR2(36),
    CONTENT              VARCHAR2(200),
    EXT_PROP             VARCHAR2(200),
-   ICON_ID              NUMBER(9),
+   ICON_CLASS           VARCHAR2(36),
    constraint PK_HW_RESOURCE primary key (ID)
 );
 
@@ -183,6 +202,16 @@ create table HW_STAFF  (
    QQ                   VARCHAR2(20),
    constraint PK_HW_STAFF primary key (ID)
 );
+
+/*==============================================================*/
+/* Table: HW_STAFF_MENU                                         */
+/*==============================================================*/
+create table HW_STAFF_MENU;
+
+/*==============================================================*/
+/* Table: HW_STAFF_PAGE                                         */
+/*==============================================================*/
+create table HW_STAFF_PAGE;
 
 /*==============================================================*/
 /* Table: HW_STAFF_POSITION                                     */
