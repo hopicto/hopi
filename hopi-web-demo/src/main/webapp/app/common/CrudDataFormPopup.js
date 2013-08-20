@@ -47,22 +47,22 @@ Ext.define('Hopi.common.CrudDataFormPopup', {
 		if (this.fp)
 			this.fp.form.reset();
 	},
-	initComponent : function() {
-		var mainPanel = this.mainPanel;
-		this.fp=Ext.create('Ext.form.FormPanel', {
-			frame : true,
-			labelWidth : 80,
-			labelAlign : 'right',
-			border : false,
-			method : 'post',
-			defaultType : 'textfield',
-			layout : 'anchor',
-			defaults : {
-				anchor : '100%'
-			},
-			items:mainPanel.dataFormItems
-		});
-		this.items=[ this.fp ];
+	initComponent : function() {		
+		this.fp=this.mainPanel.createForm();
+//		this.fp=Ext.create('Ext.form.FormPanel', {
+//			frame : true,
+//			labelWidth : 80,
+//			labelAlign : 'right',
+//			border : false,
+//			method : 'post',
+//			defaultType : 'textfield',
+//			layout : 'anchor',
+//			defaults : {
+//				anchor : '100%'
+//			},
+//			items:mainPanel.dataFormItems
+//		});
+		this.items=[this.fp];
 		this.buttons =[ {
 			text : '保存',
 			handler : this.saveData,

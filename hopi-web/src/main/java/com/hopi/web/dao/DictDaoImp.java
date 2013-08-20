@@ -10,10 +10,11 @@ import org.springframework.dao.DataAccessException;
 
 import com.hopi.dao.BaseDao;
 import com.hopi.dao.Page;
+import com.hopi.web.Sorter;
 
 public class DictDaoImp extends BaseDao implements DictDao {
 	public Page queryDictTypeForPage(String sv, Map hsMap, long start,
-			long limit, String orderBy, String orderType)
+			long limit, Sorter sorter)
 			throws DataAccessException {
 		StringBuffer sql = new StringBuffer(
 				"select * from HW_DICT_TYPE where 1=1");
@@ -43,12 +44,18 @@ public class DictDaoImp extends BaseDao implements DictDao {
 		// param.put("name", "%" + queryKey + "%");
 		// }
 
-		if (orderBy != null && !"".equals(orderBy)) {
-			sql.append(" order by ").append(orderBy);
-			if (orderType != null && !"".equals(orderType)) {
-				sql.append(" ").append(orderType);
-			}
+//		if (orderBy != null && !"".equals(orderBy)) {
+//			sql.append(" order by ").append(orderBy);
+//			if (orderType != null && !"".equals(orderType)) {
+//				sql.append(" ").append(orderType);
+//			}
+//		}
+		
+		String sorterData=sorter.getSortString();
+		if(sorterData!=null){
+			sql.append(sorterData);
 		}
+		
 		// log.info("sql="+sql);
 		return this.queryForPage(start, limit, sql.toString(), param);
 	}
@@ -66,8 +73,7 @@ public class DictDaoImp extends BaseDao implements DictDao {
 		return this.getJdbcTemplate().queryForList(sql, param);
 	}
 
-	public List queryDictTypeForList(String sv, Map hsMap, String orderBy,
-			String orderType) throws DataAccessException {
+	public List queryDictTypeForList(String sv, Map hsMap,Sorter sorter) throws DataAccessException {
 		StringBuffer sql = new StringBuffer(
 				"select * from HW_DICT_TYPE where 1=1");
 		Map param = new HashMap();
@@ -96,11 +102,15 @@ public class DictDaoImp extends BaseDao implements DictDao {
 		// param.put("name", "%" + queryKey + "%");
 		// }
 
-		if (orderBy != null && !"".equals(orderBy)) {
-			sql.append(" order by ").append(orderBy);
-			if (orderType != null && !"".equals(orderType)) {
-				sql.append(" ").append(orderType);
-			}
+//		if (orderBy != null && !"".equals(orderBy)) {
+//			sql.append(" order by ").append(orderBy);
+//			if (orderType != null && !"".equals(orderType)) {
+//				sql.append(" ").append(orderType);
+//			}
+//		}
+		String sorterData=sorter.getSortString();
+		if(sorterData!=null){
+			sql.append(sorterData);
 		}
 		return this.queryForListAll(sql.toString(), param);
 	}

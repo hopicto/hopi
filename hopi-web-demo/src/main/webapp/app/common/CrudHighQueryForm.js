@@ -32,10 +32,12 @@ Ext.define('Hopi.common.CrudHighQueryForm', {
 				xtype : 'button',
 				text : '查询',
 				handler : crudMainPanel.highQueryData,
+				iconCls:'icon-query',
 				scope : crudMainPanel
 			}, {
 				xtype : 'button',
 				text : '清空',
+				iconCls:'icon-reset',
 				handler : this.highQueryReset,
 				scope : this
 			} ]

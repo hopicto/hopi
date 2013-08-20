@@ -28,7 +28,7 @@ public class DemoAction extends MultiActionController {
 		menuMap = new HashMap();
 		menuMap.put("type", WebConstants.TOOLBAR_CREATE);
 		menuMap.put("text", "新增");
-		menuMap.put("iconCls", "icon-add");
+		menuMap.put("iconCls", "icon-create");
 		menuList.add(menuMap);
 
 		menuMap = new HashMap();
@@ -64,13 +64,13 @@ public class DemoAction extends MultiActionController {
 		menuMap = new HashMap();
 		menuMap.put("type", WebConstants.TOOLBAR_QUERY);
 		menuMap.put("text", "查询");
-		menuMap.put("iconCls", "icon-search");
+		menuMap.put("iconCls", "icon-query");
 		menuList.add(menuMap);
 
 		menuMap = new HashMap();
 		menuMap.put("type", WebConstants.TOOLBAR_HIGHQUERY);
 		menuMap.put("text", "展开高级查询");
-		menuMap.put("iconCls", "icon-search");
+		menuMap.put("iconCls", "icon-openhighquery");
 		menuList.add(menuMap);
 
 		Map resultMap = new HashMap();

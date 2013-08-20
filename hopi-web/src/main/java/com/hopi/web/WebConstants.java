@@ -85,6 +85,8 @@ public class WebConstants {
 
 	public static final String USER_ADMIN = "0";// 系统管理员ID
 
+	public static final String DEPARTMENT_ROOT="root";//部门根节点ID
+	
 	// 高级查询前缀
 	public static final String HIGH_SEARCH_PREFIX = "HS_";
 

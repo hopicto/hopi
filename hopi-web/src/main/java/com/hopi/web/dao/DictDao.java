@@ -7,13 +7,13 @@ import org.springframework.dao.DataAccessException;
 
 import com.hopi.dao.Dao;
 import com.hopi.dao.Page;
+import com.hopi.web.Sorter;
 
 public interface DictDao extends Dao {
 	Page queryDictTypeForPage(String sv, Map hsMap, long start, long limit,
-			String orderBy, String orderType) throws DataAccessException;
+			Sorter sorter) throws DataAccessException;
 
-	List queryDictTypeForList(String sv, Map hsMap, String orderBy,
-			String orderType) throws DataAccessException;
+	List queryDictTypeForList(String sv, Map hsMap,Sorter sorter) throws DataAccessException;
 
 	List findAllDictType() throws DataAccessException;
 
