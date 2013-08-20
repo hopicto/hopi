@@ -6,6 +6,7 @@
 <head>
 <title>工欲善其事，必先利其器。</title>
 <%@ include file="/common/head.jsp"%>
+<link id="theme" rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/extjs/resources/css/ext-all-${theme}.css" />
 <script type="text/javascript">
 var mainViewport;
 var TAB_INFO='info_';
@@ -70,6 +71,7 @@ Ext
 	mainViewport=Ext.create('Hopi.common.MainViewport', {
 		id:'mainViewport',
 		rootId:'1',		
+		theme:'${theme}',
 		headData:{
 			userName:'${staff.NAME}'					
 		},

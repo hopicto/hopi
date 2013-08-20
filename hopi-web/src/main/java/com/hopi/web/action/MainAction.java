@@ -45,11 +45,15 @@ public class MainAction extends MultiActionController {
 		// int countOnlineStaff = securityCache.countOnlineStaff();
 		Authentication au = SecurityContextHolder.getContext()
 				.getAuthentication();
-		
+		String theme=request.getParameter("theme");
+		if(theme==null||theme.length()<1){
+			theme="classic";
+		}
 		EnhancedUser staff = (EnhancedUser) au.getPrincipal();
 		Map um = staffDao.findStaffByLoginName(staff.getUsername());
 		Map result = new HashMap();
-		result.put("staff", um);
+		result.put("staff", um);		
+		result.put("theme", theme);
 		// result.put("onlineStaffs", new Integer(countOnlineStaff));
 		return new ModelAndView("main", result);
 	}

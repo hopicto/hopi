@@ -6,6 +6,7 @@
 <head>
 <title>Ado基础平台</title>
 <%@ include file="/common/head.jsp"%>
+<link id="theme" rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/extjs/resources/css/ext-all.css" />
 <%
 	response.addHeader("_timeout", "true");
 %>

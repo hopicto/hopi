@@ -118,37 +118,34 @@ Ext.define('Hopi.common.MainViewport', {
 		});
 		this.themeCombo = Ext.create('Ext.form.field.ComboBox', {
 			displayField : 'name',
-			fieldLabel : '主题',
-			labelWidth : 40,
-			width : 120,
+			width : 100,
 			queryMode : 'local',
-			value : 'classic',
+			value : this.theme,
+			valueField:'value',
 			store : Ext.create('Ext.data.Store', {
 				autoDestroy : true,
 				model : 'themes',
 				data : [ {
-					name : 'classic',
-					url : '/extjs/resources/css/ext-all.css'
+					name : '默认主题',
+					value:'classic'
 				}, {
-					name : 'gray',
-					url : '/extjs/resources/css/ext-all-gray.css'
+					name : '灰色主题',
+					value:'gray'
 				}, {
-					name : 'neptune',
-					url : '/extjs/resources/css/ext-all-neptune.css'
+					name : '蓝色主题',
+					value:'neptune'
 				}, {
-					name : 'access',
-					url : '/extjs/resources/css/ext-all-access.css'
-				} ]
+					name : '黑色主题',
+					value:'access'
+				}
+				]
 			}),
 			listeners : {
-				change : function(cb, v,e) {
+				change : function(cb, v, e) {
 					console.log(v);
-					console.log(e);
-					console.log(cb);
-//					Ext.util.CSS.swapStyleSheet('theme', v);
-					// console.log(this);
-			},
-			scope : this
+					location.href = '/main.do?method=main&theme=' + v;
+				},
+				scope : this
 			}
 		});
 		this.northPanel = Ext.create('Ext.Toolbar', {

@@ -50,7 +50,7 @@ Ext.define('Hopi.common.DepartmentPanel', {
 		scope:this
     },
     showWin : function(title) {		
-    	this.win = Ext.create('Hopi.common.CrudDataFormPopup', {
+    	this.win = Ext.create('Hopi.common.PopupFormWindow', {
 			mainPanel:this,
 			width:320,
 			title:title
