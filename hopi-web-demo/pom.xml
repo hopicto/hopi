@@ -300,13 +300,15 @@
 		<dependency>
 			<groupId>org.tuckey</groupId>
 			<artifactId>urlrewrite</artifactId>
-			<version>3.2.0</version>
+			<version>2.5.2</version>
 		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-websocket</artifactId>
-			<version>8.0.0.M3</version>
-		</dependency>
+		<!--
+			<dependency> <groupId>org.tuckey</groupId>
+			<artifactId>urlrewrite</artifactId> <version>3.2.0</version>
+			</dependency> <dependency> <groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-websocket</artifactId> <version>8.0.0.M3</version>
+			</dependency>
+		-->
 	</dependencies>
 	<pluginRepositories>
 		<pluginRepository>

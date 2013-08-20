@@ -53,7 +53,7 @@ Ext.define('Hopi.common.MainViewport', {
 			width : 260,
 			fp : new Ext.form.FormPanel( {
 				frame : true,
-				labelWidth : 80,				
+				labelWidth : 80,
 				border : false,
 				method : 'post',
 				defaultType : 'textfield',
@@ -86,21 +86,102 @@ Ext.define('Hopi.common.MainViewport', {
 		});
 		passwin.show();
 	},
+	queryData : function() {
+		Ext.Msg.alert('未完成的功能', '全文检索待补充');
+	},
 	initComponent : function() {
+		this.queryField = Ext.create('Ext.form.field.Text', {
+			name : 'queryField',
+			hideLabel : true,
+			width : 200,
+			listeners : {
+				specialkey : function(field, event) {
+					if (event.getCharCode() == Ext.EventObject.ENTER) {
+						this.queryData();
+					}
+				},
+				scope : this
+			}
+		});
+		Ext.define('themes', {
+			extend : 'Ext.data.Model',
+			fields : [ {
+				type : 'string',
+				name : 'name'
+			}, {
+				type : 'string',
+				name : 'value'
+			}, {
+				type : 'string',
+				name : 'url'
+			} ]
+		});
+		this.themeCombo = Ext.create('Ext.form.field.ComboBox', {
+			displayField : 'name',
+			fieldLabel : '主题',
+			labelWidth : 40,
+			width : 120,
+			queryMode : 'local',
+			value : 'classic',
+			store : Ext.create('Ext.data.Store', {
+				autoDestroy : true,
+				model : 'themes',
+				data : [ {
+					name : 'classic',
+					url : '/extjs/resources/css/ext-all.css'
+				}, {
+					name : 'gray',
+					url : '/extjs/resources/css/ext-all-gray.css'
+				}, {
+					name : 'neptune',
+					url : '/extjs/resources/css/ext-all-neptune.css'
+				}, {
+					name : 'access',
+					url : '/extjs/resources/css/ext-all-access.css'
+				} ]
+			}),
+			listeners : {
+				change : function(cb, v,e) {
+					console.log(v);
+					console.log(e);
+					console.log(cb);
+//					Ext.util.CSS.swapStyleSheet('theme', v);
+					// console.log(this);
+			},
+			scope : this
+			}
+		});
+		this.northPanel = Ext.create('Ext.Toolbar', {
+			region : 'north',
+			margins : '0 0 5 0',
+			items : [ this.headData.userName + '，欢迎进入Hopi工作平台', '-',
+					this.queryField, '->', this.themeCombo, '-', {
+						text : '修改密码',
+						iconCls : 'icon-changepass',
+						scope : this,
+						handler : this.changePass
+					}, '-', {
+						text : '退出',
+						iconCls : 'icon-logout',
+						handler : function() {
+							location.href = 'logout.do';
+						}
+					} ]
+		});
 		this.westPanel = Ext.create('Ext.tree.Panel', {
 			preventHeader : true,
-			tbar : [ this.headData.userName, '->', {
-				text : '修改密码',
-				iconCls : 'icon-changepass',
-				scope : this,
-				handler : this.changePass
-			}, '-', {
-				text : '退出',
-				iconCls : 'icon-logout',
-				handler : function() {
-					location.href = 'logout.do';
-				}
-			} ],
+			// tbar : [ this.headData.userName, '->', {
+			// text : '修改密码',
+			// iconCls : 'icon-changepass',
+			// scope : this,
+			// handler : this.changePass
+			// }, '-', {
+			// text : '退出',
+			// iconCls : 'icon-logout',
+			// handler : function() {
+			// location.href = 'logout.do';
+			// }
+			// } ],
 			region : 'west',
 			width : 200,
 			minSize : 120,
@@ -140,9 +221,8 @@ Ext.define('Hopi.common.MainViewport', {
 				},
 				scope : this
 			}
-		// ,
 
-				});
+		});
 		this.indexPanel = Ext.create('Ext.panel.Panel', {
 			id : 'mainTab',
 			title : '首页',
@@ -160,9 +240,7 @@ Ext.define('Hopi.common.MainViewport', {
 			activeTab : 0,
 			items : [ this.indexPanel ]
 		});
-		this.items = [
-		// this.northPanel,
-				this.westPanel, this.tabPanel ];
+		this.items = [ this.northPanel, this.westPanel, this.tabPanel ];
 		this.callParent();
 	}
 });
