@@ -121,24 +121,23 @@ Ext.define('Hopi.common.MainViewport', {
 			width : 100,
 			queryMode : 'local',
 			value : this.theme,
-			valueField:'value',
+			valueField : 'value',
 			store : Ext.create('Ext.data.Store', {
 				autoDestroy : true,
 				model : 'themes',
 				data : [ {
 					name : '默认主题',
-					value:'classic'
+					value : 'classic'
 				}, {
 					name : '灰色主题',
-					value:'gray'
+					value : 'gray'
 				}, {
 					name : '蓝色主题',
-					value:'neptune'
+					value : 'neptune'
 				}, {
 					name : '黑色主题',
-					value:'access'
-				}
-				]
+					value : 'access'
+				} ]
 			}),
 			listeners : {
 				change : function(cb, v, e) {
@@ -167,18 +166,6 @@ Ext.define('Hopi.common.MainViewport', {
 		});
 		this.westPanel = Ext.create('Ext.tree.Panel', {
 			preventHeader : true,
-			// tbar : [ this.headData.userName, '->', {
-			// text : '修改密码',
-			// iconCls : 'icon-changepass',
-			// scope : this,
-			// handler : this.changePass
-			// }, '-', {
-			// text : '退出',
-			// iconCls : 'icon-logout',
-			// handler : function() {
-			// location.href = 'logout.do';
-			// }
-			// } ],
 			region : 'west',
 			width : 200,
 			minSize : 120,
@@ -191,6 +178,7 @@ Ext.define('Hopi.common.MainViewport', {
 			hideCollapseTool : true,
 			split : true,
 			autoScroll : true,
+			rootVisible : false,
 			// margins : '0 0 5 5',
 			store : Ext.create('Ext.data.TreeStore', {
 				proxy : {

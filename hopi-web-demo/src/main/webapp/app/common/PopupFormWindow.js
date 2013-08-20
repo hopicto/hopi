@@ -32,11 +32,12 @@ Ext.define('Hopi.common.PopupFormWindow', {
 				url : this.mainPanel.baseUrl + 'save',
 				method : 'POST',
 				success : function() {
-					this.mainPanel.store.reload();
+//					this.mainPanel.store.reload();
+					this.mainPanel.reloadData();
 					this.close();
 				},
 				failure : function(form, action) {
-					obj = Ext.util.JSON.decode(action.response.responseText);
+					obj = Ext.decode(action.response.responseText);
 					Ext.Msg.alert('保存失败：', obj.msg);
 				},
 				scope : this
@@ -50,7 +51,7 @@ Ext.define('Hopi.common.PopupFormWindow', {
 	initComponent : function() {
 		this.fp = this.mainPanel.createForm();
 		this.items = [ this.fp ];
-		this.buttons = [ {
+		this.buttons = [{
 			text : '保存',
 			iconCls:'icon-save',
 			handler : this.saveData,

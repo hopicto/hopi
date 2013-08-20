@@ -36,19 +36,15 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
-	<!--<filter>
-		<filter-name>UrlRewriteFilter</filter-name>
+	<!--
+		<filter> <filter-name>UrlRewriteFilter</filter-name>
 		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
-	</filter>
-	<filter-mapping>
+		</filter> <filter-mapping> <filter-name>UrlRewriteFilter</filter-name>
+		<url-pattern>/dyn/*</url-pattern> </filter-mapping> <filter-mapping>
 		<filter-name>UrlRewriteFilter</filter-name>
-		<url-pattern>/dyn/*</url-pattern>
-	</filter-mapping>
+		<url-pattern>/sample/*</url-pattern> </filter-mapping>
+	-->
 	<filter-mapping>
-		<filter-name>UrlRewriteFilter</filter-name>
-		<url-pattern>/sample/*</url-pattern>
-	</filter-mapping>
-	--><filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
@@ -67,20 +63,20 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
-	<!--<servlet>
-		<servlet-name>webchat</servlet-name>
+	<!--
+		<servlet> <servlet-name>webchat</servlet-name>
 		<servlet-class>com.ado.webchat.TestServlet</servlet-class>
-		<load-on-startup>3</load-on-startup>
-	</servlet>
-	--><servlet-mapping>
+		<load-on-startup>3</load-on-startup> </servlet>
+	-->
+	<servlet-mapping>
 		<servlet-name>hopi</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
-	<!--<servlet-mapping>
-		<servlet-name>webchat</servlet-name>
-		<url-pattern>*.wc</url-pattern>
-	</servlet-mapping>
-	--><session-config>
+	<!--
+		<servlet-mapping> <servlet-name>webchat</servlet-name>
+		<url-pattern>*.wc</url-pattern> </servlet-mapping>
+	-->
+	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
 	<welcome-file-list>

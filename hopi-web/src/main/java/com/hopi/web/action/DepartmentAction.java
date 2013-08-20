@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import com.hopi.util.DebugUtil;
 import com.hopi.web.WebConstants;
 import com.hopi.web.dao.DepartmentDao;
 
@@ -85,14 +86,12 @@ public class DepartmentAction extends MultiActionController {
 			HttpServletResponse response) throws Exception {
 		Map param = new HashMap();
 		String id = request.getParameter("ID");
-		param.put("TYPE", request.getParameter("TYPE"));
-		param.put("TYPE_CODE", request.getParameter("TYPE_CODE"));
-		param.put("ITEM", request.getParameter("ITEM"));
-		param.put("ITEM_CODE", request.getParameter("ITEM_CODE"));
-		param.put("ITEM_VALUE", request.getParameter("ITEM_VALUE"));
-		param.put("SEQ", request.getParameter("SEQ"));
-		param.put("DESCRIPTION", request.getParameter("DESCRIPTION"));
+		param.put("PARENT_ID", request.getParameter("PARENT_ID"));
+		param.put("NAME", request.getParameter("NAME"));
+		param.put("CODE", request.getParameter("CODE"));
+		param.put("SEQ", request.getParameter("SEQ"));		
 		String editTag = request.getParameter(WebConstants.JSON_EDIT_TAG);
+		log.info("param:"+DebugUtil.viewEntity(param));
 		if (editTag != null && editTag.equalsIgnoreCase("true")) {
 			// update
 			param.put("ID", id);
@@ -121,7 +120,8 @@ public class DepartmentAction extends MultiActionController {
 	public ModelAndView edit(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
-		Map role = departmentDao.getById(TB_NAME, id);
+//		Map role = departmentDao.getById(TB_NAME, id);
+		Map role=departmentDao.getDepartmentById(id);
 		Map resultMap = new HashMap();
 		role.put(WebConstants.JSON_EDIT_TAG, Boolean.TRUE);
 		resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);

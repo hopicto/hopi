@@ -65,8 +65,14 @@ Ext
     	    window.location.href='<%=request.getContextPath() %>/login.jsp';   
         }   
     });   
-    Ext.data.Connection.on('requestexception', function(conn, resp,options ){        
-        Ext.Msg.alert('访问异常：','服务器无法访问');
+    Ext.data.Connection.on('requestexception', function(conn, resp,options ){    
+    	if (response.responseText != null) {
+            window.document.body.innerHTML = response.responseText;
+        }   	 
+       
+       // console.log(resp);     
+       // console.log(resp.responseText);
+       // Ext.Msg.alert('系统异常：',resp.responseText);
     }); 
 	mainViewport=Ext.create('Hopi.common.MainViewport', {
 		id:'mainViewport',

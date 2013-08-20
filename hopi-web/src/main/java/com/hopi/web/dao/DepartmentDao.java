@@ -1,6 +1,7 @@
 package com.hopi.web.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 
@@ -13,4 +14,6 @@ public interface DepartmentDao extends Dao {
 			throws DataAccessException;
 
 	List findDepartmentByParentId(String parentId) throws DataAccessException;
+	
+	Map getDepartmentById(String id)throws DataAccessException;
 }
