@@ -10,8 +10,8 @@ insert into HW_DICT_TYPE(ID,TYPE,TYPE_CODE,ITEM,ITEM_CODE,SEQ,MODIFY_TIME) value
 insert into HW_DICT_TYPE(ID,TYPE,TYPE_CODE,ITEM,ITEM_CODE,SEQ,MODIFY_TIME) values('8','岗位状态','POSITION_STATUS','删除','POSITION_STATUS_DELETE',3,sysdate);
 
 --组织
-insert into HW_DEPARTMENT(ID,NAME,CODE,PARENT_ID,SEQ) values('0','ROOT','ROOT','0',1);
-insert into HW_DEPARTMENT(ID,NAME,CODE,PARENT_ID,SEQ) values('1','Hopi公司','HOPI','0',2);
+insert into HW_DEPARTMENT(ID,NAME,CODE,PARENT_ID,SEQ) values('root','根节点','root','root',1);
+insert into HW_DEPARTMENT(ID,NAME,CODE,PARENT_ID,SEQ) values('1','Hopi公司','HOPI','root',2);
 insert into HW_DEPARTMENT(ID,NAME,CODE,PARENT_ID,SEQ) values('2','管理层','GLC','1',1);
 
 --岗位
@@ -46,10 +46,14 @@ insert into HW_ROLE_RESOURCE(ROLE_ID,RESOURCE_ID,MASK) values('2','98',1);
 insert into HW_ROLE_RESOURCE(ROLE_ID,RESOURCE_ID,MASK) values('1','99',1);
 
 
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('2','系统管理','XTGL','2',1,'1','',0);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('2','系统设置','XTGL','2',1,'1','',0);
 insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('3','类型字典','LXZD','2',1,'2','Hopi.common.DictTypePanel',1);
 insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('4','资源权限管理','ZYQXGL','2',2,'2','Hopi.common.ResourcePanel',1);
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('5','人员组织管理','RYGL','2',3,'2','Hopi.common.OrgPanel',1);
+
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('5','部门管理','BMGL','2',3,'2','Hopi.common.DepartmentPanel',1);
+
+--insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('5','人员组织管理','RYGL','2',3,'2','Hopi.common.OrgPanel',1);
+
 insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('6','角色管理','JSGL','2',4,'2','Hopi.common.RolePanel',1);
 insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('7','图标类别管理','TBLB','2',5,'2','Hopi.common.IconClassPanel',1);
 

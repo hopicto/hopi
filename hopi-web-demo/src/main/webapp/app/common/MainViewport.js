@@ -91,7 +91,7 @@ Ext.define('Hopi.common.MainViewport', {
 			preventHeader : true,
 			tbar : [ this.headData.userName, '->', {
 				text : '修改密码',
-				iconCls : 'icon-changepass',
+				iconCls : 'icon-edit',
 				scope : this,
 				handler : this.changePass
 			}, '-', {

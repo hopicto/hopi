@@ -68,9 +68,10 @@
 		parent="baseAction">
 		<property name="iconClassDao" ref="iconClassDao" />
 	</bean>
-	<!--<bean name="/org.do" class="com.hopi.web.OrgAction" parent="baseAction">
-		<property name="orgDao" ref="orgDao" />
+	<bean name="/department.do" class="com.hopi.web.action.DepartmentAction" parent="baseAction">
+		<property name="departmentDao" ref="departmentDao" />
 	</bean>
+	<!--
 	<bean name="/role.do" class="com.hopi.web.RoleAction" parent="baseAction">
 		<property name="roleDao" ref="roleDao" />
 	</bean>

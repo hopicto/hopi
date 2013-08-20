@@ -108,10 +108,12 @@ Ext.define('Hopi.common.CrudMainPanel', {
 	switchHighQuery : function() {
 		if (this.highQueryForm.hidden) {
 			this.highQueryButton.setText('收起高级查询');
+			this.highQueryButton.setIconCls('icon-closehighquery');
 			this.highQueryForm.show();
 			this.syncFx();
 		} else {
 			this.highQueryButton.setText('展开高级查询');
+			this.highQueryButton.setIconCls('icon-openhighquery');
 			this.highQueryForm.hide();
 			this.syncFx();
 		}
@@ -157,7 +159,7 @@ Ext.define('Hopi.common.CrudMainPanel', {
 			remoteSort : true,
 			baseParams : this.baseParams,
 			fields : this.storeMapping
-		});
+		});		
 		this.dockedItems = [ {
 			xtype : 'pagingtoolbar',
 			store : this.store,

@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 
 import com.hopi.dao.Dao;
 import com.hopi.dao.Page;
+import com.hopi.web.Sorter;
 
 /**
  * 图标样式
@@ -16,10 +17,11 @@ import com.hopi.dao.Page;
  */
 
 public interface IconClassDao extends Dao {
-	public Page queryIconClassForPage(String sv, Map hsMap, long start,
-			long limit, String orderBy, String orderType)
-			throws DataAccessException;
+	List queryIconClassAll() throws DataAccessException;
 
-	List queryIconClassForList(String sv, Map hsMap, String orderBy,
-			String orderType) throws DataAccessException;
+	public Page queryIconClassForPage(String sv, Map hsMap, long start,
+			long limit, Sorter sorter) throws DataAccessException;
+
+	List queryIconClassForList(String sv, Map hsMap, Sorter sorter)
+			throws DataAccessException;
 }

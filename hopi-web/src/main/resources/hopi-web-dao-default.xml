@@ -15,4 +15,5 @@
 		parent="baseDao" />
 	<bean id="dictDao" class="com.hopi.web.dao.DictDaoImp" parent="baseDao" />
 	<bean id="iconClassDao" class="com.hopi.web.dao.IconClassDaoImp" parent="baseDao" />
+	<bean id="departmentDao" class="com.hopi.web.dao.DepartmentDaoImp" parent="baseDao" />
 </beans>

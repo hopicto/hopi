@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.hopi.dao.Page;
 import com.hopi.util.QueryParamMapUtil;
+import com.hopi.web.Sorter;
 import com.hopi.web.WebConstants;
 import com.hopi.web.dao.DictDao;
 
@@ -35,12 +36,11 @@ public class DictTypeAction extends MultiActionController {
 	public ModelAndView exportData(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		Map result = new HashMap();
-		String orderBy = request.getParameter("orderBy");
-		String orderType = request.getParameter("orderType");
+		Sorter sort = new Sorter(request.getParameter("sort"));
 		Map hsMap = QueryParamMapUtil.getQueryParamMap(
 				WebConstants.HIGH_SEARCH_PREFIX, request.getParameterMap());
 		String sv = request.getParameter("sv");
-		List data = dictDao.queryDictTypeForList(sv, hsMap, orderBy, orderType);
+		List data = dictDao.queryDictTypeForList(sv, hsMap, sort);
 
 		String[] headConfig = new String[] { "分类名称", "分类代码", "元素名称", "元素编码",
 				"元素值", "序号" };
@@ -57,8 +57,9 @@ public class DictTypeAction extends MultiActionController {
 			HttpServletResponse response) throws Exception {
 		String limit = request.getParameter("limit");
 		String start = request.getParameter("start");
-		String orderBy = request.getParameter("orderBy");
-		String orderType = request.getParameter("orderType");
+		Sorter sort = new Sorter(request.getParameter("sort"));
+		// String orderBy = request.getParameter("orderBy");
+		// String orderType = request.getParameter("orderType");
 		Map hsMap = QueryParamMapUtil.getQueryParamMap(
 				WebConstants.HIGH_SEARCH_PREFIX, request.getParameterMap());
 		String sv = request.getParameter("sv");
@@ -67,7 +68,7 @@ public class DictTypeAction extends MultiActionController {
 		long pageStart = start == null || "".equals(start) ? 0 : Long
 				.parseLong(start);
 		Page page = dictDao.queryDictTypeForPage(sv, hsMap, pageStart,
-				pageSize, orderBy, orderType);
+				pageSize, sort);
 		return new ModelAndView(WebConstants.JSON_VIEW,
 				WebConstants.JSON_CLEAN, page);
 	}

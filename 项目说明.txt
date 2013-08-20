@@ -14,3 +14,8 @@ mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=co
 
 hopi query
 mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.hopi -DartifactId=hopi-query
+
+数据库设计
+mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeId=maven-archetype-quickstart -DarchetypeVersion=1.1 -DgroupId=com.hopi -DartifactId=hopi-db
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.hopi -DartifactId=hopi-db
