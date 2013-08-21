@@ -24,7 +24,7 @@ Ext.define('Hopi.common.PositionPanel',
 			createForm : function() {
 				var departmentCombo = Ext.create('Hopi.common.DepartmentCombo',
 						{
-							fp : fp
+							name : 'DEPARTMENT_NAME'
 						});
 				var fp = Ext.create('Ext.form.FormPanel', {
 					frame : true,
@@ -62,16 +62,19 @@ Ext.define('Hopi.common.PositionPanel',
 				this.highQueryForm = Ext.create(
 						'Hopi.common.CrudHighQueryForm', {
 							crudMainPanel : this,
-							items : [ {
-								fieldLabel : '名称',
-								name : 'NAME'
-							}, {
-								fieldLabel : '编码',
-								name : 'CODE'
-							}, {
-								fieldLabel : '图标名称',
-								name : 'ICON_NAME'
-							} ]
+							items : [
+									Ext.create('Hopi.common.DepartmentCombo', {
+										name : 'DEPARTMENT_NAME'
+									}), {
+										name : 'DEPARTMENT_ID',
+										xtype : 'hidden'
+									}, {
+										fieldLabel : '名称',
+										name : 'NAME'
+									}, {
+										fieldLabel : '编码',
+										name : 'CODE'
+									} ]
 						});
 				this.dataFormSetting = {
 					type : 1,

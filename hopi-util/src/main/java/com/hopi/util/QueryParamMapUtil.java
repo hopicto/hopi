@@ -24,8 +24,10 @@ public class QueryParamMapUtil {
 				String[] kv = (String[])entry.getValue();
 				if (key.startsWith(prefix) && kv != null && kv.length > 0&&kv[0].trim().length()>0) {					
 					key = key.substring(prefix.length());
-					String av = "%" + kv[0].trim() + "%";
-					rm.put(key, av);
+//					String av = "%" + kv[0].trim() + "%";
+//					
+//					rm.put(key, av);
+					rm.put(key, kv[0].trim());
 				}
 			}
 			return rm;

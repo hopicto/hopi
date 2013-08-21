@@ -4,7 +4,10 @@
 Ext.define('Hopi.common.DepartmentCombo', {
 	extend : 'Ext.form.field.Picker',
 	fieldLabel : '部门',
-	name : 'DEPARTMENT_NAME',	
+	labelWidth : 80,
+	labelAlign : 'right',
+	name : 'DEPARTMENT_NAME',
+	editable :false,
 	createPicker : function() {
 		var store = Ext.create('Ext.data.TreeStore', {
 			proxy : {
@@ -27,21 +30,17 @@ Ext.define('Hopi.common.DepartmentCombo', {
 			rootVisible : false,
 			listeners : {
 				scope : this,
-				itemclick : function(tree, record, item, index, e, eOpts) {				
-//					console.log(record.data.id);
-//					console.log(record.data.text);
-					
-					this.setRawValue(record.data.id);
-//					this.setValue(record.data.text);		
-//					console.log(this.getRawValue());
-//					console.log(this.getValue());
+				itemclick : function(tree, record, item, index, e, eOpts) {
+					this.ownerCt.form.findField('DEPARTMENT_ID').setValue(
+							record.data.id)
+					this.setValue(record.data.text);
 					this.collapse();
 				}
 			}
 		});
 		return picker;
 	},
-	initComponent : function() {		
+	initComponent : function() {
 		this.callParent();
 	}
 });

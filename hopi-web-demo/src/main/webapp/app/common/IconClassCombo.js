@@ -5,6 +5,7 @@ Ext.define('Hopi.common.IconClassCombo', {
 	extend : 'Ext.form.ComboBox',
 	name:'ICON_CLASS',
 	fieldLabel : '选择图标',
+	editable :false,
 	store : Ext.create('Ext.data.Store', {
 		idProperty : 'CODE',
 		fields : [ 'NAME','CODE','ICON_NAME' ],

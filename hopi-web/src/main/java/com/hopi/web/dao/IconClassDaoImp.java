@@ -53,7 +53,7 @@ public class IconClassDaoImp extends BaseDao implements IconClassDao {
 					sql.append(" or ");
 				}
 				sql.append(key).append(" like :").append(key);
-				param.put(key, value);
+				param.put(key, "%" + value+ "%");
 				hi++;
 			}
 			sql.append(")");

@@ -56,7 +56,7 @@ public class PositionAction extends MultiActionController {
 			HttpServletResponse response) throws Exception {
 		String limit = request.getParameter("limit");
 		String start = request.getParameter("start");
-		String departmentId=request.getParameter("departmentId");
+//		String departmentId=request.getParameter("departmentId");
 		Sorter sort = new Sorter(request.getParameter("sort"));
 		Map hsMap = QueryParamMapUtil.getQueryParamMap(
 				WebConstants.HIGH_SEARCH_PREFIX, request.getParameterMap());
@@ -65,7 +65,7 @@ public class PositionAction extends MultiActionController {
 				.parseLong(limit);
 		long pageStart = start == null || "".equals(start) ? 0 : Long
 				.parseLong(start);
-		Page page = positionDao.queryPositionForPage(departmentId,sv, hsMap, pageStart,
+		Page page = positionDao.queryPositionForPage(sv, hsMap, pageStart,
 				pageSize, sort);
 		return new ModelAndView(WebConstants.JSON_VIEW,
 				WebConstants.JSON_CLEAN, page);
@@ -107,7 +107,8 @@ public class PositionAction extends MultiActionController {
 	public ModelAndView edit(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
-		Map role = positionDao.getById(TB_NAME, id);
+//		Map role = positionDao.getById(TB_NAME, id);
+		Map role=positionDao.getPositionById(id);
 		Map resultMap = new HashMap();
 		role.put(WebConstants.JSON_EDIT_TAG, Boolean.TRUE);
 		resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);

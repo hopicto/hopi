@@ -4,14 +4,17 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 
 import com.hopi.dao.BaseDao;
 import com.hopi.dao.Page;
+import com.hopi.web.Sorter;
 import com.hopi.web.WebConstants;
 
 public class StaffDaoImp extends BaseDao implements StaffDao {
@@ -24,18 +27,19 @@ public class StaffDaoImp extends BaseDao implements StaffDao {
 		return count > 0;
 	}
 
-	public String findStaffIdByLoginName(String loginName) throws DataAccessException {
+	public String findStaffIdByLoginName(String loginName)
+			throws DataAccessException {
 		String sql = "select ID from HW_STAFF where LOGIN_NAME=:loginName";
 		Map param = new HashMap();
 		param.put("loginName", loginName);
-		List data=this.queryForListAll(sql, param);
-		if(data.size()>0){
-			Map m1=(Map)data.get(0);
-			return (String)m1.get("ID");
+		List data = this.queryForListAll(sql, param);
+		if (data.size() > 0) {
+			Map m1 = (Map) data.get(0);
+			return (String) m1.get("ID");
 		}
-		return null;		
+		return null;
 	}
-	
+
 	public Map findStaffByLoginName(String loginName)
 			throws DataAccessException {
 		String sql = "select t1.*,t2.NAME as ORG_NAME from HW_STAFF t1 left join HW_DEPARTMENT t2 on t1.DEPARTMENT_ID=t2.ID where LOGIN_NAME=:loginName";
@@ -49,7 +53,8 @@ public class StaffDaoImp extends BaseDao implements StaffDao {
 	}
 
 	public List findStaffRole(String id) throws DataAccessException {
-//		String sql = "select r.ID,r.NAME,r.CODE from HW_STAFF_ROLE ur,HW_ROLE r where ur.ROLE_ID=r.ID(+) and ur.STAFF_ID=:staffId";
+		// String sql =
+		// "select r.ID,r.NAME,r.CODE from HW_STAFF_ROLE ur,HW_ROLE r where ur.ROLE_ID=r.ID(+) and ur.STAFF_ID=:staffId";
 		String sql = "select t3.ID,t3.NAME,t3.CODE from HW_STAFF_POSITION t1 left join HW_POSITION_ROLE t2 on t1.POSITION_ID=t2.POSITION_ID left join HW_ROLE t3 on t2.ROLE_ID=t3.ID where t1.STAFF_ID=:staffId";
 		Map param = new HashMap();
 		param.put("staffId", id);
@@ -66,15 +71,19 @@ public class StaffDaoImp extends BaseDao implements StaffDao {
 			param.put("parentId", parentId);
 			return this.getJdbcTemplate().queryForList(sql, param);
 		} else {
-//			String sql = "select distinct re.* from HW_STAFF_ROLE ur,HW_ROLE_RESOURCE rr,HW_RESOURCE re where ur.ROLE_ID=rr.ROLE_ID(+) and ur.USER_ID=:userId  and rr.RESOURCE_ID=re.ID and re.PARENT_ID=:parentId and re.TYPE=:type order by re.SEQ";
-			StringBuffer sql=new StringBuffer();
+			// String sql =
+			// "select distinct re.* from HW_STAFF_ROLE ur,HW_ROLE_RESOURCE rr,HW_RESOURCE re where ur.ROLE_ID=rr.ROLE_ID(+) and ur.USER_ID=:userId  and rr.RESOURCE_ID=re.ID and re.PARENT_ID=:parentId and re.TYPE=:type order by re.SEQ";
+			StringBuffer sql = new StringBuffer();
 			sql.append("select distinct t4.* from HW_STAFF_POSITION t1");
-			sql.append(" left join HW_POSITION_ROLE t2 on t1.POSITION_ID=t2.POSITION_ID");
-			sql.append(" left join HW_ROLE_RESOURCE t3 on t2.ROLE_ID=t3.ROLE_ID");
+			sql
+					.append(" left join HW_POSITION_ROLE t2 on t1.POSITION_ID=t2.POSITION_ID");
+			sql
+					.append(" left join HW_ROLE_RESOURCE t3 on t2.ROLE_ID=t3.ROLE_ID");
 			sql.append(" left join HW_RESOURCE t4 on t3.RESOURCE_ID=t4.ID");
-			sql.append(" where t1.STAFF_ID=:staffId and t4.TYPE=:type and t4.PARENT_ID=:parentId");
+			sql
+					.append(" where t1.STAFF_ID=:staffId and t4.TYPE=:type and t4.PARENT_ID=:parentId");
 			sql.append(" order by t4.SEQ");
-			
+
 			Map param = new HashMap();
 			param.put("staffId", userId);
 			param.put("type", type);
@@ -84,11 +93,13 @@ public class StaffDaoImp extends BaseDao implements StaffDao {
 	}
 
 	public boolean isAdmin(String userId) throws DataAccessException {
-//		String sql = "select count(1) from HW_STAFF_ROLE where USER_ID=:userId and ROLE_ID=:roleId";
-		StringBuffer sql=new StringBuffer();
+		// String sql =
+		// "select count(1) from HW_STAFF_ROLE where USER_ID=:userId and ROLE_ID=:roleId";
+		StringBuffer sql = new StringBuffer();
 		sql.append("select count(t2.ROLE_ID) from HW_STAFF_POSITION t1");
-		sql.append(" left join HW_POSITION_ROLE t2 on t1.POSITION_ID=t2.POSITION_ID");
-		sql.append(" where t1.STAFF_ID=:staffId and t2.ROLE_ID=:roleId");		
+		sql
+				.append(" left join HW_POSITION_ROLE t2 on t1.POSITION_ID=t2.POSITION_ID");
+		sql.append(" where t1.STAFF_ID=:staffId and t2.ROLE_ID=:roleId");
 		Map param = new HashMap();
 		param.put("staffId", userId);
 		param.put("roleId", WebConstants.ROLE_ADMIN_ID);
@@ -96,30 +107,38 @@ public class StaffDaoImp extends BaseDao implements StaffDao {
 		return count > 0;
 	}
 
-	public Page queryStaffForPage(String loginName, String orgId, long start,
-			long limit, String orderBy, String orderType)
-			throws DataAccessException {
+	public Page queryStaffForPage(String sv, Map hsMap, long start, long limit,
+			Sorter sorter) throws DataAccessException {
 		StringBuffer sql = new StringBuffer(
-				"select u.ID,u.LOGIN_NAME,u.NAME,o.NAME as ORG_FULL_NAME,u.STATUS,u.DESCRIPTION,t.ITEM as STATUS_NAME from HW_STAFF u left join HW_DEPARTMENT o on u.DEPARTMENT_ID=o.id left join HW_DICT_TYPE t on u.status=t.id where 1=1");
-		Map param = new HashMap();
-
-		if (orgId != null && !"-1".equals(orgId)) {
-			sql.append(" and u.DEPARTMENT_ID=:orgId");
-			param.put("orgId", orgId);
-		}
-
-		if (loginName != null && !"".equals(loginName)) {
-			sql
-					.append(" and (instr(u.LOGIN_NAME,:loginName)>0 or instr(u.NAME,:loginName)>0)");
-			param.put("loginName", loginName);
-		}
-
-		if (orderBy != null && !"".equals(orderBy)) {
-			sql.append(" order by u.").append(orderBy);
-			if (orderType != null && !"".equals(orderType)) {
-				sql.append(" ").append(orderType);
+				"select u.ID,u.LOGIN_NAME,u.NAME,o.NAME as DEPARTMENT_NAME,u.STATUS,u.DESCRIPTION,t.ITEM as STATUS_NAME");
+		sql.append(" from HW_STAFF u left join HW_DEPARTMENT o on u.DEPARTMENT_ID=o.id");
+		sql.append(" left join HW_DICT_TYPE t on u.status=t.id where 1=1");
+		Map param = new HashMap();		
+		if (hsMap != null && hsMap.size() > 0) {
+			sql.append(" and (");
+			int hi = 0;
+			for (Iterator it = hsMap.entrySet().iterator(); it.hasNext();) {
+				Entry entry = (Entry) it.next();
+				String key = (String) entry.getKey();
+				String value = (String) entry.getValue();
+				if (hi > 0) {
+					sql.append(" or ");
+				}
+				sql.append(key).append(" like :").append(key);
+				param.put(key, value);
+				hi++;
 			}
+			sql.append(")");
+		} else if (sv != null && !"".equals(sv)) {
+			sql.append(" and (LOGIN_NAME like :sv or NAME like :sv)");
+			param.put("sv", "%" + sv + "%");
 		}
+
+		String sorterData = sorter.getSortString();
+		if (sorterData != null) {
+			sql.append(sorterData);
+		}
+
 		return this.queryForPage(start, limit, sql.toString(), param);
 	}
 
@@ -138,7 +157,7 @@ public class StaffDaoImp extends BaseDao implements StaffDao {
 				"delete from HW_STAFF_ROLE where USER_ID=:userId", param);
 		if (roleIds != null && roleIds.length > 0) {
 			String sql = "insert into HW_STAFF_ROLE(USER_ID,ROLE_ID) values(?,?)";
-//			final long id = Long.parseLong(userId);
+			// final long id = Long.parseLong(userId);
 			this.getJdbcTemplate().getJdbcOperations().batchUpdate(sql,
 					new BatchPreparedStatementSetter() {
 						public int getBatchSize() {
@@ -148,7 +167,7 @@ public class StaffDaoImp extends BaseDao implements StaffDao {
 						public void setValues(PreparedStatement ps, int i)
 								throws SQLException {
 							ps.setString(1, userId);
-							ps.setString(2,roleIds[i]);
+							ps.setString(2, roleIds[i]);
 						}
 					});
 		}
@@ -164,24 +183,25 @@ public class StaffDaoImp extends BaseDao implements StaffDao {
 	public void processStaffLogin(String loginName, String loginIp)
 			throws DataAccessException {
 		// 记录本次登录信息
-//		StringBuffer sql = new StringBuffer(
-//				"update HW_STAFF set LAST_LOGIN_DATE=sysdate,LOGIN_COUNT=LOGIN_COUNT+1");// where
-//		// LOGIN_NAME=:loginName");
-//		Map param = new HashMap();
-//		if (loginIp != null) {
-//			sql.append(",LAST_LOGIN_IP=:loginIp");
-//			param.put("loginIp", loginIp);
-//		}
-//		sql.append(" where LOGIN_NAME=:loginName");
-//		param.put("loginName", loginName);
-//
-//		this.updateRaw(sql.toString(), param, null, null);
-		String staffId=findStaffIdByLoginName(loginName);				
-		Map param=new HashMap();
+		// StringBuffer sql = new StringBuffer(
+		// "update HW_STAFF set LAST_LOGIN_DATE=sysdate,LOGIN_COUNT=LOGIN_COUNT+1");//
+		// where
+		// // LOGIN_NAME=:loginName");
+		// Map param = new HashMap();
+		// if (loginIp != null) {
+		// sql.append(",LAST_LOGIN_IP=:loginIp");
+		// param.put("loginIp", loginIp);
+		// }
+		// sql.append(" where LOGIN_NAME=:loginName");
+		// param.put("loginName", loginName);
+		//
+		// this.updateRaw(sql.toString(), param, null, null);
+		String staffId = findStaffIdByLoginName(loginName);
+		Map param = new HashMap();
 		param.put("STAFF_ID", staffId);
 		param.put("ACCESS_IP", loginIp);
 		param.put("ACCESS_TIME", new Date());
-		
+
 		this.insertRaw("HW_ACCESS_LOG", param, null, null);
 	}
 

@@ -19,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.hopi.dao.Page;
+import com.hopi.util.QueryParamMapUtil;
+import com.hopi.web.Sorter;
 import com.hopi.web.WebConstants;
 import com.hopi.web.dao.StaffDao;
 import com.hopi.web.security.EnhancedUser;
@@ -51,32 +53,29 @@ public class StaffAction extends MultiActionController {
 			HttpServletResponse response) {
 		String limit = request.getParameter("limit");
 		String start = request.getParameter("start");
-		String orderBy = request.getParameter("orderBy");
-		String orderType = request.getParameter("orderType");
-		String area = request.getParameter("area");
-		String orgId = request.getParameter("orgId");
-		String loginName = request.getParameter("loginName");
-		if (area != null && "true".equalsIgnoreCase(area)) {
-			orgId = "-1";
-		}
-		// log.info("area="+area+" orgId="+orgId+" loginName="+loginName);
+		Sorter sort = new Sorter(request.getParameter("sort"));
+		Map hsMap = QueryParamMapUtil.getQueryParamMap(
+				WebConstants.HIGH_SEARCH_PREFIX, request.getParameterMap());
+		String sv = request.getParameter("sv");
 		long pageSize = limit == null ? WebConstants.PAGE_SIZE_DEFAULT : Long
 				.parseLong(limit);
 		long pageStart = start == null || "".equals(start) ? 0 : Long
 				.parseLong(start);
-		Page page = staffDao.queryStaffForPage(loginName, orgId, pageStart,
-				pageSize, orderBy, orderType);
-		List list = page.getList();
-		for (Iterator it = list.iterator(); it.hasNext();) {
-			Map m = (Map) it.next();
-			String status = (String) m.get("STATUS");
-			if (WebConstants.USER_STATUS_LOCK.equalsIgnoreCase(status)) {
-				m.put("LOCK", Boolean.TRUE);
-			} else {
-				m.put("UNLOCK", Boolean.TRUE);
-			}
-		}
-		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN, page);
+		Page page = staffDao.queryStaffForPage(sv, hsMap, pageStart, pageSize,
+				sort);
+		return new ModelAndView(WebConstants.JSON_VIEW,
+				WebConstants.JSON_CLEAN, page);
+//		List list = page.getList();
+//		for (Iterator it = list.iterator(); it.hasNext();) {
+//			Map m = (Map) it.next();
+//			String status = (String) m.get("STATUS");
+//			if (WebConstants.USER_STATUS_LOCK.equalsIgnoreCase(status)) {
+//				m.put("LOCK", Boolean.TRUE);
+//			} else {
+//				m.put("UNLOCK", Boolean.TRUE);
+//			}
+//		}
+//		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN, page);
 	}
 
 	public ModelAndView save(HttpServletRequest request,

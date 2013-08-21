@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 
 import com.hopi.dao.Dao;
 import com.hopi.dao.Page;
+import com.hopi.web.Sorter;
 
 public interface StaffDao extends Dao {
 	/**
@@ -78,9 +79,8 @@ public interface StaffDao extends Dao {
 	 * @return
 	 * @throws DataAccessException
 	 */
-	Page queryStaffForPage(String loginName, String orgId, long start,
-			long limit, String orderBy, String orderType)
-			throws DataAccessException;
+	Page queryStaffForPage(String sv, Map hsMap, long start, long limit,
+			Sorter sorter) throws DataAccessException;
 
 	/**
 	 * 加载用户，关联查询用户所在部门

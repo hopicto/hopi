@@ -14,6 +14,8 @@ import com.hopi.web.Sorter;
  */
 
 public interface PositionDao extends Dao {
-	Page queryPositionForPage(String departmentId, String sv, Map hsMap,
-			long start, long limit, Sorter sorter) throws DataAccessException;
+	Map getPositionById(String id) throws DataAccessException;
+
+	Page queryPositionForPage(String sv, Map hsMap, long start, long limit,
+			Sorter sorter) throws DataAccessException;
 }

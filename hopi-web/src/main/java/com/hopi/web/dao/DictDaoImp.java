@@ -30,7 +30,7 @@ public class DictDaoImp extends BaseDao implements DictDao {
 					sql.append(" or ");
 				}
 				sql.append(key).append(" like :").append(key);
-				param.put(key, value);
+				param.put(key, "%" + value+ "%");
 				hi++;
 			}
 			sql.append(")");
