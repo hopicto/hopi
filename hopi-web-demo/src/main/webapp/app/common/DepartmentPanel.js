@@ -6,8 +6,10 @@ Ext.define('Hopi.common.DepartmentPanel', {
 	collapsible : true,
 	loadMask : true,
 	useArrows : true,
+	columnLines : true,
+	rowLines : true,
 	rootVisible : false,
-	animate : false,
+	animate : false,	
 	listeners : {
 		itemcontextmenu : function(dataView, record, node, index, e, eopts) {
 			e.stopEvent();
@@ -47,12 +49,13 @@ Ext.define('Hopi.common.DepartmentPanel', {
 				})
 			}
 			contextmenu.showAt(e.getXY());
-		},
+		},		
 		scope : this
 	},
-	reloadData:function(){
-		this.store.getRootNode().removeAll();
+	reloadData : function() {
+//		this.store.getRootNode().removeAll();
 		this.store.load();
+//		this.getStore.load();
 	},
 	showWin : function(title) {
 		this.win = Ext.create('Hopi.common.PopupFormWindow', {
@@ -63,6 +66,9 @@ Ext.define('Hopi.common.DepartmentPanel', {
 		this.win.show();
 	},
 	createForm : function() {
+		var iconClassCombo = Ext.create('Hopi.common.IconClassCombo', {
+			name : 'ICON_CLASS'
+		});
 		var fp = Ext.create('Ext.form.FormPanel', {
 			frame : true,
 			labelWidth : 80,
@@ -98,8 +104,9 @@ Ext.define('Hopi.common.DepartmentPanel', {
 			}, {
 				fieldLabel : '序号',
 				name : 'SEQ',
+				xtype: 'numberfield',
 				allowBlank : false
-			} ]
+			}, iconClassCombo ]
 		});
 		return fp;
 	},
@@ -129,12 +136,10 @@ Ext.define('Hopi.common.DepartmentPanel', {
 					},
 					method : 'POST',
 					success : function(response) {
-						var r = Ext.decode(response.responseText);
-						if (!r.success)
-							Ext.Msg.alert('提示信息',
-									'数据删除失败，由以下原因所致：<br/>' + (r.msg ? r.msg
-											: '未知原因'));
-						else {
+						var obj = Ext.decode(response.responseText);
+						if (!obj.success) {
+							Ext.Msg.alert('操作失败：', obj.msg);
+						} else {
 							this.reloadData();
 						}
 					},
@@ -150,9 +155,9 @@ Ext.define('Hopi.common.DepartmentPanel', {
 				reader : 'json',
 				url : this.baseUrl + 'tree'
 			},
-			fields : [ 'id', 'text', 'code', 'seq', 'leaf' ],
-			autoLoad : true,
-			lazyFill : true
+			fields : [ 'id', 'text', 'code', 'seq', 'leaf', 'expanded' ],
+			clearOnLoad:true,
+			autoLoad : true
 		});
 		this.columns = [ {
 			xtype : 'treecolumn',

@@ -47,15 +47,19 @@ insert into HW_ROLE_RESOURCE(ROLE_ID,RESOURCE_ID,MASK) values('1','99',1);
 
 
 insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('2','系统设置','XTGL','2',1,'1','',0);
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('3','类型字典','LXZD','2',1,'2','Hopi.common.DictTypePanel',1);
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('4','资源权限管理','ZYQXGL','2',2,'2','Hopi.common.ResourcePanel',1);
 
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('5','部门管理','BMGL','2',3,'2','Hopi.common.DepartmentPanel',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('20','类型字典','LXZD','2',1,'2','Hopi.common.DictTypePanel',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('21','图标类别管理','TBLB','2',2,'2','Hopi.common.IconClassPanel',1);
+
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('30','部门管理','BMGL','2',3,'2','Hopi.common.DepartmentPanel',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('31','岗位管理','GWGL','2',4,'2','Hopi.common.PositionPanel',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('32','角色管理','JSGL','2',5,'2','Hopi.common.RolePanel',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('33','人员管理','RYGL','2',6,'2','Hopi.common.StaffPanel',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('34','权限管理','QXGL','2',7,'2','Hopi.common.ResourcePanel',1);
+
 
 --insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('5','人员组织管理','RYGL','2',3,'2','Hopi.common.OrgPanel',1);
 
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('6','角色管理','JSGL','2',4,'2','Hopi.common.RolePanel',1);
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('7','图标类别管理','TBLB','2',5,'2','Hopi.common.IconClassPanel',1);
 
 --insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('8','图标管理','TBGL',2,5,2,'Ado.jcpt.IconPanel',1);
 

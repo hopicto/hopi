@@ -74,10 +74,14 @@
 		parent="baseAction">
 		<property name="departmentDao" ref="departmentDao" />
 	</bean>
-	<!--
-		<bean name="/role.do" class="com.hopi.web.RoleAction"
-		parent="baseAction"> <property name="roleDao" ref="roleDao" /> </bean>
-	-->
+	<bean name="/position.do" class="com.hopi.web.action.PositionAction"
+		parent="baseAction">
+		<property name="positionDao" ref="positionDao" />
+	</bean>
+	<bean name="/role.do" class="com.hopi.web.action.RoleAction"
+		parent="baseAction">
+		<property name="roleDao" ref="roleDao" />
+	</bean>
 	<bean name="/staff.do" class="com.hopi.web.action.StaffAction"
 		parent="baseAction">
 		<property name="saltSource" ref="saltSource" />
@@ -89,37 +93,6 @@
 		parent="baseAction">
 		<property name="resourceDao" ref="resourceDao" />
 	</bean>
-	<!--
-		<bean name="/info.do" class="com.hopi.web.InfoAction"
-		parent="baseAction"> <property name="infoDao" ref="infoDao" /> </bean>
-		<bean name="/affix.do" class="com.hopi.web.AffixAction"
-		parent="baseAction"> <property name="affixDao" ref="affixDao" />
-		</bean> <bean name="/accessLog.do"
-		class="com.hopi.web.AccessLogAction" parent="baseAction"> <property
-		name="staffDao" ref="staffDao" /> </bean> <bean name="/message.do"
-		class="com.hopi.web.MessageAction" parent="baseAction"> <property
-		name="messageDao" ref="messageDao" /> </bean>
-	-->
 	<bean name="/403.do" class="com.hopi.web.action.UnauthorizedAction" />
-	<!--<bean id="exceptionResolver"
-		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="exceptionMappings">
-			<props>				
-				<prop key="java.lang.Exception">error/500</prop>
-			</props>
-		</property>
-	</bean>
-	--><bean id="hopiWebExceptionHandler"
-		class="com.hopi.web.HopiWebExceptionHandler" />
-	<!--
-		<bean id="hopiWebExceptionHandler"
-		class="com.hopi.web.HopiWebExceptionHandler" />
-	-->
-	<!--
-		<bean id="exceptionResolver"
-		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="exceptionMappings"> <props> <prop
-		key="java.lang.exception">error/500</prop> </props> </property>
-		</bean>
-	-->
+	<bean id="hopiWebExceptionHandler" class="com.hopi.web.HopiWebExceptionHandler" />
 </beans>

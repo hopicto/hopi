@@ -43,7 +43,7 @@ Ext.define('Hopi.common.IconClassPanel', {
 			autoLoad : true,
 			proxy : {
 				type : 'ajax',
-				url : this.baseUrl + 'iconCombo',
+				url : this.baseUrl + 'iconComboAll',
 				reader : {
 					type : 'json',
 					root : 'data'
@@ -57,8 +57,8 @@ Ext.define('Hopi.common.IconClassPanel', {
 			queryMode : 'remote',
 			valueField : 'ICON_NAME',
 			tpl : Ext.create('Ext.XTemplate', '<tpl for=".">',
-					'<div class="x-boundlist-item">',
-					'<img src="/images/icon/{ICON_NAME}"/>', '{ICON_NAME}',
+					'<div class="x-boundlist-item">',					
+					'<img src="',HOPI_GLOBAL.ICON_PATH,'{ICON_NAME}"/>', '{ICON_NAME}',					
 					'</div>', '</tpl>'),
 			displayTpl : Ext.create('Ext.XTemplate', '<tpl for=".">',
 					'{ICON_NAME}', '</tpl>')

@@ -18,8 +18,22 @@ import com.hopi.web.Sorter;
  */
 
 public class IconClassDaoImp extends BaseDao implements IconClassDao {
+	public boolean checkUniqueData(String code,String oldId)throws DataAccessException{
+		StringBuffer sql=new StringBuffer("select count(1) from HW_ICON_CLASS t1");
+		Map param=new HashMap();
+		param.put("code", code);
+		if(oldId!=null){
+			sql.append(" where t1.ID<>:oldId and t1.CODE=:code");
+			param.put("oldId", oldId);
+		}else{
+			sql.append(" where t1.CODE=:code");
+		}
+		long c=this.getJdbcTemplate().queryForLong(sql.toString(), param);
+		return c==0;		
+	}
+	
 	public List queryIconClassAll() throws DataAccessException {
-		String sql = "select * from HW_ICON_CLASS";
+		String sql = "select * from HW_ICON_CLASS order by code";
 		return this.queryForListAll(sql, new HashMap());
 	}
 

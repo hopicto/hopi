@@ -79,7 +79,8 @@ public class MainAction extends MultiActionController {
 				map.put("module", re.get("CONTENT"));
 				map.put("extprop", re.get("EXT_PROP"));
 			} else {
-				map.put("expanded", Boolean.FALSE);
+//				map.put("expanded", Boolean.FALSE);
+				map.put("expanded", Boolean.TRUE);
 			}
 			map.put("leaf", new Boolean(isLeaf));
 			result.add(map);

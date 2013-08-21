@@ -24,4 +24,15 @@ public interface IconClassDao extends Dao {
 
 	List queryIconClassForList(String sv, Map hsMap, Sorter sorter)
 			throws DataAccessException;
+
+	/**
+	 * 确认code是否唯一
+	 * 
+	 * @param code
+	 * @param oldId
+	 * @return
+	 * @throws DataAccessException
+	 */
+	boolean checkUniqueData(String code, String oldId)
+			throws DataAccessException;
 }

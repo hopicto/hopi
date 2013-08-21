@@ -9,6 +9,7 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/extjs-ux/validate.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/iconClass.css" />
 <link rel="shortcut icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+<script type="text/javascript" src="<%=request.getContextPath() %>/app/common/HopiGlobal.js"></script>
 <!--<script type="text/javascript" src="<%=request.getContextPath() %>/app/common/VTypes.js"></script>
 --><script type="text/javascript">
 Ext.Loader.setConfig( {

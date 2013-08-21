@@ -65,14 +65,11 @@ Ext
     	    window.location.href='<%=request.getContextPath() %>/login.jsp';   
         }   
     });   
-    Ext.data.Connection.on('requestexception', function(conn, resp,options ){    
-    	if (response.responseText != null) {
-            window.document.body.innerHTML = response.responseText;
-        }   	 
-       
-       // console.log(resp);     
-       // console.log(resp.responseText);
-       // Ext.Msg.alert('系统异常：',resp.responseText);
+    Ext.data.Connection.on('requestexception', function(conn, resp,options ){        	
+    	if (resp.responseText != null) {
+    		var obj = Ext.decode(resp.responseText);
+			Ext.Msg.alert('系统异常：', obj.msg);			
+        }       
     }); 
 	mainViewport=Ext.create('Hopi.common.MainViewport', {
 		id:'mainViewport',

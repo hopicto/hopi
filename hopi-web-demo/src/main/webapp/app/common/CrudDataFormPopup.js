@@ -36,7 +36,7 @@ Ext.define('Hopi.common.CrudDataFormPopup', {
 					this.close();
 				},
 				failure : function(form, action) {
-					obj = Ext.util.JSON.decode(action.response.responseText);
+					obj = Ext.decode(action.response.responseText);
 					Ext.Msg.alert('保存失败：', obj.msg);
 				},
 				scope : this

@@ -47,7 +47,7 @@ public interface Dao {
 	 * @throws DataAccessException
 	 */
 	List queryForListAll(String sql, Map param) throws DataAccessException;
-
+	
 	/**
 	 * 插入数据，返回ID
 	 * 

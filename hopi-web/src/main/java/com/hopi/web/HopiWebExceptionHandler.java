@@ -23,6 +23,7 @@ public class HopiWebExceptionHandler implements HandlerExceptionResolver {
 		resultMap.put(WebConstants.JSON_SUCCESS, Boolean.FALSE);
 		resultMap.put(WebConstants.JSON_ERROR_MSG, ExceptionUtils
 				.getRootCauseMessage(exception));
+		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);		
 		return new ModelAndView(WebConstants.JSON_VIEW, resultMap);
 	}
 }

@@ -33,7 +33,8 @@ public class DepartmentAction extends MultiActionController {
 
 		return null;
 	}
-	public ModelAndView tree(HttpServletRequest request,
+	
+	public ModelAndView oldTree(HttpServletRequest request,
 			HttpServletResponse response) {
 		String parentId=request.getParameter("node");
 		List ur = this.departmentDao.findDepartmentByParentId(parentId);
@@ -45,22 +46,26 @@ public class DepartmentAction extends MultiActionController {
 			map.put("text", re.get("NAME"));
 			map.put("code", re.get("CODE"));
 			map.put("seq",(BigDecimal)re.get("SEQ"));
+			map.put("iconCls",re.get("ICON_CLASS"));
+			map.put("expanded", Boolean.TRUE);
 			BigDecimal leaf = (BigDecimal) re.get("COUNT");
 			boolean isLeaf = leaf.intValue() ==0;
-//			if (isLeaf) {
-//				// map.put("href", re.get("CONTENT"));
-//				map.put("module", re.get("CONTENT"));
-//			} else {
-//				map.put("expanded", Boolean.FALSE);
-//			}
 			map.put("leaf", new Boolean(isLeaf));
 			result.add(map);
 		}
-//		Map resultMap = new HashMap();
-//		resultMap.put(Constants.JSON_DATA, result);
 		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
 				result);
 	}
+	
+	public ModelAndView tree(HttpServletRequest request,
+			HttpServletResponse response) {
+		String parentId=request.getParameter("node");
+		List result = this.departmentDao.getDepartmentTreeAll(parentId);		
+		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
+				result);
+	}
+	
+	
 	
 //	public ModelAndView query(HttpServletRequest request,
 //			HttpServletResponse response) throws Exception {
@@ -89,9 +94,10 @@ public class DepartmentAction extends MultiActionController {
 		param.put("PARENT_ID", request.getParameter("PARENT_ID"));
 		param.put("NAME", request.getParameter("NAME"));
 		param.put("CODE", request.getParameter("CODE"));
-		param.put("SEQ", request.getParameter("SEQ"));		
+		param.put("SEQ", request.getParameter("SEQ"));
+		param.put("ICON_CLASS", request.getParameter("ICON_CLASS"));		
 		String editTag = request.getParameter(WebConstants.JSON_EDIT_TAG);
-		log.info("param:"+DebugUtil.viewEntity(param));
+//		log.info("param:"+DebugUtil.viewEntity(param));
 		if (editTag != null && editTag.equalsIgnoreCase("true")) {
 			// update
 			param.put("ID", id);

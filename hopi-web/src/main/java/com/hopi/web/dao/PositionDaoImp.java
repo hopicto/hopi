@@ -2,7 +2,6 @@ package com.hopi.web.dao;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -12,16 +11,21 @@ import com.hopi.dao.BaseDao;
 import com.hopi.dao.Page;
 import com.hopi.web.Sorter;
 
-public class RoleDaoImp extends BaseDao implements RoleDao {
-	public List getAllRole() throws DataAccessException {
-		String sql = "select ID,NAME from HW_ROLE order by ID";
-		return this.getJdbcTemplate().queryForList(sql, new HashMap());
-	}
+/**
+ * @author 董依良
+ * @since 2013-8-21
+ */
 
-	public Page queryRoleForPage(String sv, Map hsMap, long start, long limit,
-			Sorter sorter) throws DataAccessException {
-		StringBuffer sql = new StringBuffer("select * from HW_ROLE where 1=1");	
-		Map param = new HashMap();		
+public class PositionDaoImp extends BaseDao implements PositionDao {
+	public Page queryPositionForPage(String departmentId, String sv, Map hsMap,
+			long start, long limit, Sorter sorter) throws DataAccessException {
+		StringBuffer sql = new StringBuffer(
+				"select * from HW_POSITION where 1=1");
+		Map param = new HashMap();
+		if(departmentId!=null&&departmentId.length()>0){
+			sql.append(" and DEPARTMENT_ID=:departmentId");
+			param.put("departmentId", departmentId);
+		}
 		if (hsMap != null && hsMap.size() > 0) {
 			sql.append(" and (");
 			int hi = 0;
