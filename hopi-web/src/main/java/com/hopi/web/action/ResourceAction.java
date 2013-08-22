@@ -27,7 +27,8 @@ public class ResourceAction extends MultiActionController {
 	public void setResourceDao(ResourceDao resourceDao) {
 		this.resourceDao = resourceDao;
 	}
-	public ModelAndView tree(HttpServletRequest request,
+	
+	public ModelAndView oldTree(HttpServletRequest request,
 			HttpServletResponse response) {
 		String parentId=request.getParameter("node");
 		List ur = resourceDao.findMenuResourceByParentId(parentId);		
@@ -44,6 +45,27 @@ public class ResourceAction extends MultiActionController {
 		}
 		Map resultMap = new HashMap();
 		resultMap.put(WebConstants.JSON_DATA, result);
+		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
+				result);
+	}
+	public ModelAndView tree(HttpServletRequest request,
+			HttpServletResponse response) {
+		String parentId=request.getParameter("node");
+		List result=resourceDao.findMenuResourceByTree(parentId);
+//		List ur = resourceDao.findMenuResourceByParentId(parentId);		
+//		List result = new ArrayList();
+//		for (Iterator it = ur.iterator(); it.hasNext();) {
+//			Map re = (Map) it.next();
+//			Map map = new HashMap();
+//			map.put("id", (BigDecimal) re.get("ID"));
+//			map.put("text", re.get("NAME"));
+//			BigDecimal leaf = (BigDecimal) re.get("COUNT");
+//			boolean isLeaf = leaf.intValue() ==0;
+//			map.put("leaf", new Boolean(isLeaf));
+//			result.add(map);
+//		}
+//		Map resultMap = new HashMap();
+//		resultMap.put(WebConstants.JSON_DATA, result);
 		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
 				result);
 	}

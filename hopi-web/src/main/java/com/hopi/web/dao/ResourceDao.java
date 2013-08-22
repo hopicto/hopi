@@ -2,7 +2,6 @@ package com.hopi.web.dao;
 
 import java.util.List;
 
-
 import org.springframework.dao.DataAccessException;
 
 import com.hopi.dao.Dao;
@@ -31,6 +30,15 @@ public interface ResourceDao extends Dao {
 	 * @throws DataAccessException
 	 */
 	List findMenuResourceByParentId(String parentId) throws DataAccessException;
+
+	/**
+	 * 根据父节点查询全部子孙节点
+	 * 
+	 * @param parentId
+	 * @return
+	 * @throws DataAccessException
+	 */
+	List findMenuResourceByTree(String parentId) throws DataAccessException;
 
 	/**
 	 * 根据菜单查找URL资源

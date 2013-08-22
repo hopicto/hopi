@@ -1,9 +1,11 @@
 package com.hopi.web.dao;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
-
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +52,38 @@ public class ResourceDaoImp extends BaseDao implements ResourceDao {
 		param.put("parentId", parentId);
 		param.put("type", new Long(WebConstants.RESOURCE_TYPE_MENU));
 		return this.getJdbcTemplate().queryForList(sql, param);
+	}
+
+	public List findMenuResourceByTree(String parentId)
+			throws DataAccessException {
+		StringBuffer sql = new StringBuffer(
+				"select ID,NAME,SEQ,ICON_CLASS from HW_RESOURCE");
+		sql.append(" where TYPE=:type and PARENT_ID=:parentId order by SEQ");
+		Map param = new HashMap();
+		param.put("parentId", parentId);
+		param.put("type", WebConstants.RESOURCE_TYPE_MENU);
+		List rawData = this.queryForListAll(sql.toString(), param);
+		List newData = new ArrayList();
+		for (Iterator it = rawData.iterator(); it.hasNext();) {
+			Map m = (Map) it.next();
+			String id = (String) m.get("ID");
+			String name = (String) m.get("NAME");
+			String iconClass = (String) m.get("ICON_CLASS");
+			BigDecimal seq = (BigDecimal) m.get("SEQ");
+			Map nm = new HashMap();
+			nm.put("id", id);
+			nm.put("text", name);
+			nm.put("iconCls", iconClass);
+			boolean leaf = true;
+			List childData = findMenuResourceByTree(id);
+			if (childData != null && childData.size() > 0) {
+				nm.put("children", childData);
+				leaf = false;
+			}
+			nm.put("leaf", leaf);
+			newData.add(nm);
+		}
+		return newData;
 	}
 
 	/**
@@ -105,7 +139,7 @@ public class ResourceDaoImp extends BaseDao implements ResourceDao {
 				param);
 		if (roleIds != null && roleIds.length > 0) {
 			String sql = "insert into HW_ROLE_RESOURCE(RESOURCE_ID,ROLE_ID) values(?,?)";
-//			final long id = Long.parseLong(resourceId);
+			// final long id = Long.parseLong(resourceId);
 			this.getJdbcTemplate().getJdbcOperations().batchUpdate(sql,
 					new BatchPreparedStatementSetter() {
 						public int getBatchSize() {
