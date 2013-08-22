@@ -17,13 +17,15 @@ public class HopiWebExceptionHandler implements HandlerExceptionResolver {
 			.getLog(HopiWebExceptionHandler.class);
 
 	public ModelAndView resolveException(HttpServletRequest request,
-			HttpServletResponse response, Object handler, Exception exception) {
-		ExceptionUtils.getRootCauseMessage(exception);
+			HttpServletResponse response, Object handler, Exception exception) {	
 		Map resultMap = new HashMap();
 		resultMap.put(WebConstants.JSON_SUCCESS, Boolean.FALSE);
 		resultMap.put(WebConstants.JSON_ERROR_MSG, ExceptionUtils
 				.getRootCauseMessage(exception));
-		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);		
+		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);	
+		if(!(exception instanceof HopiWebException)){
+			log.error(ExceptionUtils.getFullStackTrace(exception));
+		}		
 		return new ModelAndView(WebConstants.JSON_VIEW, resultMap);
 	}
 }

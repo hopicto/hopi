@@ -18,14 +18,14 @@ Ext.define('Hopi.common.RolePanel', {
 	createForm : function() {
 		var fp = Ext.create('Ext.form.FormPanel', {
 			frame : true,
-			labelWidth : 80,
-			labelAlign : 'right',
 			border : false,
-			method : 'post',
-			defaultType : 'textfield',
+			method : 'post',			
 			layout : 'anchor',
 			defaults : {
-				anchor : '100%'
+				xtype:'textfield',
+				anchor : '100%',
+				labelWidth : 80,
+				labelAlign : 'right'
 			},
 			items : [ {
 				name : '_EDIT_TAG',

@@ -6,8 +6,10 @@ Ext.define('Hopi.common.ResourcePanel', {
 	collapsible : true,
 	loadMask : true,
 	useArrows : true,
+	columnLines : true,
+	rowLines : true,
 	rootVisible : false,
-	animate : false,
+	animate : false,	
 	listeners : {
 		itemcontextmenu : function(dataView, record, node, index, e, eopts) {
 			e.stopEvent();
@@ -22,7 +24,7 @@ Ext.define('Hopi.common.ResourcePanel', {
 					items : [ {
 						text : '新增资源',
 						iconCls : 'icon-create',
-						handler : treePanel.createData,
+						handler : treePanel.createResource,
 						scope : treePanel
 					} ]
 				})
@@ -31,27 +33,26 @@ Ext.define('Hopi.common.ResourcePanel', {
 					items : [ {
 						text : '新增资源',
 						iconCls : 'icon-create',
-						handler : treePanel.createData,
+						handler : treePanel.createResource,
 						scope : treePanel
 					}, {
 						text : '修改资源',
 						iconCls : 'icon-edit',
-						handler : treePanel.modifyData,
+						handler : treePanel.modifyResource,
 						scope : treePanel
 					}, {
 						text : '删除资源',
 						iconCls : 'icon-delete',
-						handler : treePanel.deleteData,
+						handler : treePanel.deleteResource,
 						scope : treePanel
 					} ]
 				})
 			}
 			contextmenu.showAt(e.getXY());
-		},
+		},		
 		scope : this
 	},
-	reloadData:function(){
-		this.store.getRootNode().removeAll();
+	reloadData : function() {
 		this.store.load();
 	},
 	showWin : function(title) {
@@ -63,16 +64,19 @@ Ext.define('Hopi.common.ResourcePanel', {
 		this.win.show();
 	},
 	createForm : function() {
+		var iconClassCombo = Ext.create('Hopi.common.IconClassCombo', {
+			name : 'ICON_CLASS'
+		});
 		var fp = Ext.create('Ext.form.FormPanel', {
 			frame : true,
-			labelWidth : 80,
-			labelAlign : 'right',
 			border : false,
-			method : 'post',
-			defaultType : 'textfield',
+			method : 'post',			
 			layout : 'anchor',
 			defaults : {
-				anchor : '100%'
+				xtype:'textfield',
+				anchor : '100%',
+				labelWidth : 80,
+				labelAlign : 'right'
 			},
 			items : [ {
 				name : '_EDIT_TAG',
@@ -84,7 +88,7 @@ Ext.define('Hopi.common.ResourcePanel', {
 				name : 'PARENT_ID',
 				xtype : 'hidden'
 			}, {
-				fieldLabel : '上级部门',
+				fieldLabel : '上级资源',
 				name : 'PARENT_NAME',
 				xtype : 'displayfield'
 			}, {
@@ -98,18 +102,19 @@ Ext.define('Hopi.common.ResourcePanel', {
 			}, {
 				fieldLabel : '序号',
 				name : 'SEQ',
+				xtype: 'numberfield',
 				allowBlank : false
-			} ]
+			}, iconClassCombo ]
 		});
 		return fp;
 	},
-	createData : function() {
+	createResource : function() {
 		this.showWin('新增' + this.nameSuffix);
 		this.win.fp.form.findField('PARENT_ID').setValue(this.selectNode.id);
 		this.win.fp.form.findField('PARENT_NAME')
 				.setValue(this.selectNode.name);
 	},
-	modifyData : function() {
+	modifyResource : function() {
 		this.showWin('修改' + this.nameSuffix);
 		this.win.fp.form.load( {
 			url : this.baseUrl + 'edit',
@@ -119,7 +124,7 @@ Ext.define('Hopi.common.ResourcePanel', {
 			waitMsg : 'Loading'
 		});
 	},
-	deleteData : function() {
+	deleteResource : function() {
 		var m = Ext.MessageBox.confirm('删除提示', '是否真的要删除数据？', function(ret) {
 			if (ret == 'yes') {
 				Ext.Ajax.request( {
@@ -129,12 +134,10 @@ Ext.define('Hopi.common.ResourcePanel', {
 					},
 					method : 'POST',
 					success : function(response) {
-						var r = Ext.decode(response.responseText);
-						if (!r.success)
-							Ext.Msg.alert('提示信息',
-									'数据删除失败，由以下原因所致：<br/>' + (r.msg ? r.msg
-											: '未知原因'));
-						else {
+						var obj = Ext.decode(response.responseText);
+						if (!obj.success) {
+							Ext.Msg.alert('操作失败：', obj.msg);
+						} else {
 							this.reloadData();
 						}
 					},
@@ -150,9 +153,9 @@ Ext.define('Hopi.common.ResourcePanel', {
 				reader : 'json',
 				url : this.baseUrl + 'tree'
 			},
-			fields : [ 'id', 'text', 'code', 'seq', 'leaf' ],
-			autoLoad : true,
-			lazyFill : true
+			fields : [ 'id', 'text', 'code', 'seq', 'leaf', 'expanded' ],
+			clearOnLoad:true,
+			autoLoad : true
 		});
 		this.columns = [ {
 			xtype : 'treecolumn',

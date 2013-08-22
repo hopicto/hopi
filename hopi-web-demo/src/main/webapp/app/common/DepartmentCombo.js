@@ -5,7 +5,7 @@ Ext.define('Hopi.common.DepartmentCombo', {
 	extend : 'Ext.form.field.Picker',
 	fieldLabel : '部门',
 	labelWidth : 80,
-	labelAlign : 'right',
+	labelAlign : 'right',	
 	name : 'DEPARTMENT_NAME',
 	editable :false,
 	createPicker : function() {

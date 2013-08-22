@@ -20,10 +20,12 @@ import com.hopi.web.Sorter;
 
 public class PositionDaoImp extends BaseDao implements PositionDao {
 	public Map getPositionById(String id) throws DataAccessException {
-		String sql = "select t1.*,t2.NAME as DEPARTMENT_NAME from HW_POSITION t1 left join HW_DEPARTMENT t2 on t1.DEPARTMENT_ID=t2.ID order by t1.CODE";
+		StringBuffer sql = new StringBuffer("select t1.*,t2.NAME as DEPARTMENT_NAME from HW_POSITION t1");
+		sql.append(" left join HW_DEPARTMENT t2 on t1.DEPARTMENT_ID=t2.ID");
+		sql.append(" where t1.ID=:id order by t1.CODE");
 		Map param = new HashMap();
 		param.put("id", id);
-		List data = this.queryForListAll(sql, param);
+		List data = this.queryForListAll(sql.toString(), param);
 		if (data.size() > 0) {
 			return (Map) data.get(0);
 		} else {

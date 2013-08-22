@@ -4,6 +4,8 @@
 Ext.define('Hopi.common.IconClassCombo', {
 	extend : 'Ext.form.ComboBox',
 	name:'ICON_CLASS',
+	labelWidth : 80,
+	labelAlign : 'right',	
 	fieldLabel : '选择图标',
 	editable :false,
 	store : Ext.create('Ext.data.Store', {

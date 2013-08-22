@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.hopi.dao.Page;
 import com.hopi.util.QueryParamMapUtil;
+import com.hopi.web.HopiWebException;
 import com.hopi.web.Sorter;
 import com.hopi.web.WebConstants;
 import com.hopi.web.dao.StaffDao;
@@ -31,11 +32,12 @@ public class StaffAction extends MultiActionController {
 	private PasswordEncoder passwordEncoder;
 	private SaltSource saltSource;
 	private StaffDao staffDao;
-//	private StaffCustomerDao userCustomerDao;
-//
-//	public void setStaffCustomerDao(StaffCustomerDao userCustomerDao) {
-//		this.userCustomerDao = userCustomerDao;
-//	}
+
+	// private StaffCustomerDao userCustomerDao;
+	//
+	// public void setStaffCustomerDao(StaffCustomerDao userCustomerDao) {
+	// this.userCustomerDao = userCustomerDao;
+	// }
 
 	public void setSaltSource(SaltSource saltSource) {
 		this.saltSource = saltSource;
@@ -65,56 +67,70 @@ public class StaffAction extends MultiActionController {
 				sort);
 		return new ModelAndView(WebConstants.JSON_VIEW,
 				WebConstants.JSON_CLEAN, page);
-//		List list = page.getList();
-//		for (Iterator it = list.iterator(); it.hasNext();) {
-//			Map m = (Map) it.next();
-//			String status = (String) m.get("STATUS");
-//			if (WebConstants.USER_STATUS_LOCK.equalsIgnoreCase(status)) {
-//				m.put("LOCK", Boolean.TRUE);
-//			} else {
-//				m.put("UNLOCK", Boolean.TRUE);
-//			}
-//		}
-//		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN, page);
+		// List list = page.getList();
+		// for (Iterator it = list.iterator(); it.hasNext();) {
+		// Map m = (Map) it.next();
+		// String status = (String) m.get("STATUS");
+		// if (WebConstants.USER_STATUS_LOCK.equalsIgnoreCase(status)) {
+		// m.put("LOCK", Boolean.TRUE);
+		// } else {
+		// m.put("UNLOCK", Boolean.TRUE);
+		// }
+		// }
+		// return new ModelAndView(WebConstants.JSON_VIEW,
+		// WebConstants.JSON_CLEAN, page);
 	}
 
 	public ModelAndView save(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map param = new HashMap();
-		String loginName=request.getParameter("LOGIN_NAME");
+		String loginName = request.getParameter("LOGIN_NAME");
 		param.put("LOGIN_NAME", loginName);
 		param.put("NAME", request.getParameter("NAME"));
 		param.put("EMAIL", request.getParameter("EMAIL"));
 		param.put("MOBILE", request.getParameter("MOBILE"));
 		param.put("PHONE", request.getParameter("PHONE"));
-		param.put("DESCRIPTION", request.getParameter("DESCRIPTION"));
+		param.put("DEPARTMENT_ID", request.getParameter("DEPARTMENT_ID"));
+		// param.put("DESCRIPTION", request.getParameter("DESCRIPTION"));
 		String editTag = request.getParameter(WebConstants.JSON_EDIT_TAG);
 		if (editTag != null && editTag.equalsIgnoreCase("true")) {
 			// update
-			param.put("ID", request.getParameter("ID"));
-			staffDao.update(TB_NAME, param,null,null);
+			String id = request.getParameter("ID");
+			param.put("ID", id);
+			if (staffDao.checkUniqueData(loginName, id)) {
+				staffDao.update(TB_NAME, param, null, null);
+			} else {
+				throw new HopiWebException("登录名重复，请修改");
+			}
+			staffDao.update(TB_NAME, param, null, null);
 		} else {
 			// insert
-			boolean isExists=staffDao.isStaffExist(loginName);
-			if(isExists){
-				Map resultMap = new HashMap();				
-				resultMap.put(WebConstants.JSON_SUCCESS, Boolean.FALSE);
-				resultMap.put(WebConstants.JSON_ERROR_MSG, "用户名已经存在！");
-				return new ModelAndView(WebConstants.JSON_VIEW, resultMap);
-			}else{
-				param.put("ORG_ID", request.getParameter("ORG_ID"));
-				param.put("STATUS", new Long(WebConstants.USER_STATUS_VALID));
-				param.put("PASSWORD", passwordEncoder.encodePassword(request
-						.getParameter("PASSWORD"), saltSource.getSalt(null)));
-				param.put("LOGIN_COUNT", new Integer(0));
-				staffDao.insert(TB_NAME, param,null,null);
-				Map curStaff=this.staffDao.findStaffByLoginName(loginName);
-				String userId=(String)curStaff.get("ID");
-				String[] ids=new String[2];
-				ids[0]=WebConstants.ROLE_USER_ID;//默认设置两个角色
-				ids[1]=WebConstants.ROLE_ANOYMOUS_ID;//默认设置两个角色
-				staffDao.saveStaffRole(userId.toString(), ids);
-			}			
+			if (staffDao.checkUniqueData(loginName, null)) {
+				staffDao.insert(TB_NAME, param, null, null);
+			} else {
+				throw new HopiWebException("登录名重复，请修改");
+			}
+
+//			boolean isExists = staffDao.isStaffExist(loginName);
+//			if (isExists) {
+//				Map resultMap = new HashMap();
+//				resultMap.put(WebConstants.JSON_SUCCESS, Boolean.FALSE);
+//				resultMap.put(WebConstants.JSON_ERROR_MSG, "用户名已经存在！");
+//				return new ModelAndView(WebConstants.JSON_VIEW, resultMap);
+//			} else {
+//				param.put("ORG_ID", request.getParameter("ORG_ID"));
+//				param.put("STATUS", new Long(WebConstants.USER_STATUS_VALID));
+//				param.put("PASSWORD", passwordEncoder.encodePassword(request
+//						.getParameter("PASSWORD"), saltSource.getSalt(null)));
+//				param.put("LOGIN_COUNT", new Integer(0));
+//				staffDao.insert(TB_NAME, param, null, null);
+//				Map curStaff = this.staffDao.findStaffByLoginName(loginName);
+//				String userId = (String) curStaff.get("ID");
+//				String[] ids = new String[2];
+//				ids[0] = WebConstants.ROLE_USER_ID;// 默认设置两个角色
+//				ids[1] = WebConstants.ROLE_ANOYMOUS_ID;// 默认设置两个角色
+//				staffDao.saveStaffRole(userId.toString(), ids);
+//			}
 		}
 		return new ModelAndView(WebConstants.JSON_VIEW);
 	}
@@ -151,8 +167,8 @@ public class StaffAction extends MultiActionController {
 		Map resultMap = new HashMap();
 		resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);
 		resultMap.put(WebConstants.JSON_DATA, data);
-		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
-				resultMap);
+		return new ModelAndView(WebConstants.JSON_VIEW,
+				WebConstants.JSON_CLEAN, resultMap);
 	}
 
 	public ModelAndView saveStaffRole(HttpServletRequest request,
@@ -166,8 +182,8 @@ public class StaffAction extends MultiActionController {
 		staffDao.saveStaffRole(userId, ids);
 		Map resultMap = new HashMap();
 		resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);
-		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
-				resultMap);
+		return new ModelAndView(WebConstants.JSON_VIEW,
+				WebConstants.JSON_CLEAN, resultMap);
 	}
 
 	// 锁定用户
@@ -177,11 +193,11 @@ public class StaffAction extends MultiActionController {
 		Map param = new HashMap();
 		param.put("ID", id);
 		param.put("STATUS", new Long(WebConstants.USER_STATUS_LOCK));
-		staffDao.update(TB_NAME, param,null,null);
+		staffDao.update(TB_NAME, param, null, null);
 		Map resultMap = new HashMap();
 		resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);
-		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
-				resultMap);
+		return new ModelAndView(WebConstants.JSON_VIEW,
+				WebConstants.JSON_CLEAN, resultMap);
 	}
 
 	// 解除锁定
@@ -191,11 +207,11 @@ public class StaffAction extends MultiActionController {
 		Map param = new HashMap();
 		param.put("ID", id);
 		param.put("STATUS", new Long(WebConstants.USER_STATUS_VALID));
-		staffDao.update(TB_NAME, param,null,null);
+		staffDao.update(TB_NAME, param, null, null);
 		Map resultMap = new HashMap();
 		resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);
-		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
-				resultMap);
+		return new ModelAndView(WebConstants.JSON_VIEW,
+				WebConstants.JSON_CLEAN, resultMap);
 	}
 
 	// 重置密码
@@ -207,11 +223,11 @@ public class StaffAction extends MultiActionController {
 		param.put("ID", userId);
 		param.put("PASSWORD", passwordEncoder.encodePassword(password,
 				saltSource.getSalt(null)));
-		staffDao.update(TB_NAME, param,null,null);
+		staffDao.update(TB_NAME, param, null, null);
 		Map resultMap = new HashMap();
 		resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);
-		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
-				resultMap);
+		return new ModelAndView(WebConstants.JSON_VIEW,
+				WebConstants.JSON_CLEAN, resultMap);
 	}
 
 	// 修改个人密码
@@ -231,42 +247,44 @@ public class StaffAction extends MultiActionController {
 			param.put("ID", new Long(user.getId()));
 			param.put("PASSWORD", passwordEncoder.encodePassword(newPassword,
 					saltSource.getSalt(user)));
-			staffDao.update(TB_NAME, param,null,null);
+			staffDao.update(TB_NAME, param, null, null);
 			resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);
 		} else {
 			resultMap.put(WebConstants.JSON_SUCCESS, Boolean.FALSE);
 			resultMap.put(WebConstants.JSON_ERROR_MSG, "原密码错误");
 		}
-		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
-				resultMap);
+		return new ModelAndView(WebConstants.JSON_VIEW,
+				WebConstants.JSON_CLEAN, resultMap);
 	}
+
 	// 修改个人信息_加载
 	public ModelAndView ownerSettingLoad(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		Authentication au = SecurityContextHolder.getContext()
 				.getAuthentication();
-		EnhancedUser user = (EnhancedUser) au.getPrincipal();				
+		EnhancedUser user = (EnhancedUser) au.getPrincipal();
 		Map role = staffDao.ownerSettingLoad(String.valueOf(user.getId()));
 		Map resultMap = new HashMap();
 		role.put(WebConstants.JSON_EDIT_TAG, Boolean.TRUE);
 		resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);
 		resultMap.put(WebConstants.JSON_DATA, role);
-		return new ModelAndView(WebConstants.JSON_VIEW, resultMap);	
+		return new ModelAndView(WebConstants.JSON_VIEW, resultMap);
 	}
+
 	// 修改个人信息
 	public ModelAndView ownerSetting(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		Authentication au = SecurityContextHolder.getContext()
 				.getAuthentication();
 		EnhancedUser user = (EnhancedUser) au.getPrincipal();
-		Map param=new HashMap();
+		Map param = new HashMap();
 		param.put("NAME", request.getParameter("NAME"));
 		param.put("EMAIL", request.getParameter("EMAIL"));
 		param.put("MOBILE", request.getParameter("MOBILE"));
-		param.put("PHONE", request.getParameter("PHONE"));		
+		param.put("PHONE", request.getParameter("PHONE"));
 		param.put("ID", new Long(user.getId()));
-		staffDao.update(TB_NAME, param,null,null);		
-		return new ModelAndView(WebConstants.JSON_VIEW);		
+		staffDao.update(TB_NAME, param, null, null);
+		return new ModelAndView(WebConstants.JSON_VIEW);
 	}
 
 	// /**
@@ -291,42 +309,42 @@ public class StaffAction extends MultiActionController {
 	// resultMap);
 	// }
 
-//	// 用户可选组织范围
-//	public ModelAndView validOrg(HttpServletRequest request,
-//			HttpServletResponse response) throws Exception {
-//		Authentication au = SecurityContextHolder.getContext()
-//				.getAuthentication();
-//		EnhancedUser user = (EnhancedUser) au.getPrincipal();
-//		List data = userCustomerDao.findStaffOrgList(String
-//				.valueOf(user.getId()));
-//		Map all=new HashMap();
-//		all.put("ID", "-1");
-//		all.put("NAME", "全部可选部门");		
-//		data.add(0, all);
-//		Map resultMap = new HashMap();
-//		resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);
-//		resultMap.put(WebConstants.JSON_DATA, data);
-//		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
-//				resultMap);
-//	}
-//
-//	// 用户可选投顾范围
-//	public ModelAndView validTg(HttpServletRequest request,
-//			HttpServletResponse response) throws Exception {
-//		Authentication au = SecurityContextHolder.getContext()
-//				.getAuthentication();
-//		EnhancedUser user = (EnhancedUser) au.getPrincipal();
-//		String orgId = request.getParameter("orgId");
-//		List data = userCustomerDao.findStaffTGList(orgId, String.valueOf(user
-//				.getId()));
-//		Map all=new HashMap();
-//		all.put("ID", "-1");
-//		all.put("NAME", "全部可选投顾");		
-//		data.add(0, all);
-//		Map resultMap = new HashMap();
-//		resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);
-//		resultMap.put(WebConstants.JSON_DATA, data);
-//		return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
-//				resultMap);
-//	}	
+	// // 用户可选组织范围
+	// public ModelAndView validOrg(HttpServletRequest request,
+	// HttpServletResponse response) throws Exception {
+	// Authentication au = SecurityContextHolder.getContext()
+	// .getAuthentication();
+	// EnhancedUser user = (EnhancedUser) au.getPrincipal();
+	// List data = userCustomerDao.findStaffOrgList(String
+	// .valueOf(user.getId()));
+	// Map all=new HashMap();
+	// all.put("ID", "-1");
+	// all.put("NAME", "全部可选部门");
+	// data.add(0, all);
+	// Map resultMap = new HashMap();
+	// resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);
+	// resultMap.put(WebConstants.JSON_DATA, data);
+	// return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
+	// resultMap);
+	// }
+	//
+	// // 用户可选投顾范围
+	// public ModelAndView validTg(HttpServletRequest request,
+	// HttpServletResponse response) throws Exception {
+	// Authentication au = SecurityContextHolder.getContext()
+	// .getAuthentication();
+	// EnhancedUser user = (EnhancedUser) au.getPrincipal();
+	// String orgId = request.getParameter("orgId");
+	// List data = userCustomerDao.findStaffTGList(orgId, String.valueOf(user
+	// .getId()));
+	// Map all=new HashMap();
+	// all.put("ID", "-1");
+	// all.put("NAME", "全部可选投顾");
+	// data.add(0, all);
+	// Map resultMap = new HashMap();
+	// resultMap.put(WebConstants.JSON_SUCCESS, Boolean.TRUE);
+	// resultMap.put(WebConstants.JSON_DATA, data);
+	// return new ModelAndView(WebConstants.JSON_VIEW, WebConstants.JSON_CLEAN,
+	// resultMap);
+	// }
 }

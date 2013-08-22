@@ -55,7 +55,6 @@ Ext.define('Hopi.common.DepartmentPanel', {
 	reloadData : function() {
 //		this.store.getRootNode().removeAll();
 		this.store.load();
-//		this.getStore.load();
 	},
 	showWin : function(title) {
 		this.win = Ext.create('Hopi.common.PopupFormWindow', {
@@ -71,14 +70,14 @@ Ext.define('Hopi.common.DepartmentPanel', {
 		});
 		var fp = Ext.create('Ext.form.FormPanel', {
 			frame : true,
-			labelWidth : 80,
-			labelAlign : 'right',
 			border : false,
-			method : 'post',
-			defaultType : 'textfield',
+			method : 'post',			
 			layout : 'anchor',
 			defaults : {
-				anchor : '100%'
+				xtype:'textfield',
+				anchor : '100%',
+				labelWidth : 80,
+				labelAlign : 'right'
 			},
 			items : [ {
 				name : '_EDIT_TAG',

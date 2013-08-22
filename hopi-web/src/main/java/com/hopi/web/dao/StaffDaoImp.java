@@ -19,12 +19,19 @@ import com.hopi.web.WebConstants;
 
 public class StaffDaoImp extends BaseDao implements StaffDao {
 
-	public boolean isStaffExist(String loginName) throws DataAccessException {
-		String sql = "select count(1) from HW_STAFF where LOGIN_NAME=:loginName";
+	public boolean checkUniqueData(String code, String oldId)
+			throws DataAccessException {
+		StringBuffer sql = new StringBuffer("select count(1) from HW_STAFF t1");
 		Map param = new HashMap();
-		param.put("loginName", loginName);
-		long count = this.getJdbcTemplate().queryForLong(sql, param);
-		return count > 0;
+		param.put("code", code);
+		if (oldId != null) {
+			sql.append(" where t1.ID<>:oldId and t1.LOGIN_NAME=:code");
+			param.put("oldId", oldId);
+		} else {
+			sql.append(" where t1.LOGIN_NAME=:code");
+		}
+		long c = this.getJdbcTemplate().queryForLong(sql.toString(), param);
+		return c == 0;
 	}
 
 	public String findStaffIdByLoginName(String loginName)
@@ -110,10 +117,11 @@ public class StaffDaoImp extends BaseDao implements StaffDao {
 	public Page queryStaffForPage(String sv, Map hsMap, long start, long limit,
 			Sorter sorter) throws DataAccessException {
 		StringBuffer sql = new StringBuffer(
-				"select u.ID,u.LOGIN_NAME,u.NAME,o.NAME as DEPARTMENT_NAME,u.STATUS,u.DESCRIPTION,t.ITEM as STATUS_NAME");
-		sql.append(" from HW_STAFF u left join HW_DEPARTMENT o on u.DEPARTMENT_ID=o.id");
+				"select u.*,o.NAME as DEPARTMENT_NAME,t.ITEM as STATUS_NAME");
+		sql
+				.append(" from HW_STAFF u left join HW_DEPARTMENT o on u.DEPARTMENT_ID=o.id");
 		sql.append(" left join HW_DICT_TYPE t on u.status=t.id where 1=1");
-		Map param = new HashMap();		
+		Map param = new HashMap();
 		if (hsMap != null && hsMap.size() > 0) {
 			sql.append(" and (");
 			int hi = 0;
@@ -143,7 +151,7 @@ public class StaffDaoImp extends BaseDao implements StaffDao {
 	}
 
 	public Map loadStaffById(String id) throws DataAccessException {
-		String sql = "select u.ID,u.DEPARTMENT_ID,u.LOGIN_NAME,u.NAME,u.EMAIL,u.MOBILE,u.PHONE,u.DESCRIPTION,o.NAME as ORG_NAME from HW_STAFF u left join HW_DEPARTMENT o on u.DEPARTMENT_ID=o.id(+) where u.ID=:id";
+		String sql = "select u.ID,u.DEPARTMENT_ID,u.LOGIN_NAME,u.NAME,u.EMAIL,u.MOBILE,u.PHONE,u.DESCRIPTION,o.NAME as DEPARTMENT_NAME from HW_STAFF u left join HW_DEPARTMENT o on u.DEPARTMENT_ID=o.id(+) where u.ID=:id";
 		Map param = new HashMap();
 		param.put("id", id);
 		return (Map) this.getJdbcTemplate().queryForMap(sql, param);

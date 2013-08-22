@@ -10,14 +10,17 @@ import com.hopi.dao.Page;
 import com.hopi.web.Sorter;
 
 public interface StaffDao extends Dao {
+
 	/**
-	 * 判断用户是否存在
+	 * 验证登录名唯一
 	 * 
 	 * @param loginName
+	 * @param oldId
 	 * @return
 	 * @throws DataAccessException
 	 */
-	boolean isStaffExist(String loginName) throws DataAccessException;
+	boolean checkUniqueData(String loginName, String oldId)
+			throws DataAccessException;
 
 	/**
 	 * 根据登录名查找用户ID

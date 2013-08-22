@@ -77,14 +77,12 @@ Ext.define('Hopi.common.CrudMainPanel', {
 					},
 					method : 'POST',
 					success : function(response) {
-						var r = Ext.decode(response.responseText);
-						if (!r.success)
-							Ext.Msg.alert('提示信息',
-									'数据删除失败，由以下原因所致：<br/>' + (r.msg ? r.msg
-											: '未知原因'));
-						else {
+						var obj = Ext.decode(response.responseText);
+						if (!obj.success) {
+							Ext.Msg.alert('操作失败：', obj.msg);
+						} else {
 							this.store.reload();
-						}
+						}						
 					},
 					scope : this
 				});

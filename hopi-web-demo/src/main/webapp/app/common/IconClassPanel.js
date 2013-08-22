@@ -53,6 +53,8 @@ Ext.define('Hopi.common.IconClassPanel', {
 		var iconCombo = Ext.create('Ext.form.ComboBox', {
 			name : 'ICON_NAME',
 			fieldLabel : '选择图标',
+			labelWidth : 80,
+			labelAlign : 'right',
 			store : iconStore,
 			queryMode : 'remote',
 			valueField : 'ICON_NAME',
@@ -65,14 +67,14 @@ Ext.define('Hopi.common.IconClassPanel', {
 		})
 		var fp = Ext.create('Ext.form.FormPanel', {
 			frame : true,
-			labelWidth : 80,
-			labelAlign : 'right',
 			border : false,
-			method : 'post',
-			defaultType : 'textfield',
+			method : 'post',			
 			layout : 'anchor',
 			defaults : {
-				anchor : '100%'
+				xtype:'textfield',
+				anchor : '100%',
+				labelWidth : 80,
+				labelAlign : 'right'
 			},
 			items : [ {
 				name : '_EDIT_TAG',

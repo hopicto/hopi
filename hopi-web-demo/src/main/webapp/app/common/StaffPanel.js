@@ -39,14 +39,14 @@ Ext.define('Hopi.common.StaffPanel', {
 		});
 		var fp = Ext.create('Ext.form.FormPanel', {
 			frame : true,
-			labelWidth : 80,
-			labelAlign : 'right',
 			border : false,
 			method : 'post',
-			defaultType : 'textfield',
 			layout : 'anchor',
 			defaults : {
-				anchor : '100%'
+				xtype : 'textfield',
+				anchor : '100%',
+				labelWidth : 80,
+				labelAlign : 'right'
 			},
 			items : [ {
 				name : '_EDIT_TAG',
@@ -68,14 +68,17 @@ Ext.define('Hopi.common.StaffPanel', {
 			}, {
 				fieldLabel : '邮箱',
 				name : 'EMAIL',
+				// vtype: 'email',
 				allowBlank : false
 			}, {
 				fieldLabel : '电话',
 				name : 'PHONE',
+				// vtype: 'phone',
 				allowBlank : false
 			}, {
 				fieldLabel : '手机',
 				name : 'MOBILE',
+				// vtype: 'mobile',
 				allowBlank : false
 			} ]
 		});
