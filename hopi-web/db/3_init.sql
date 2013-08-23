@@ -17,10 +17,10 @@ insert into HW_DEPARTMENT(ID,NAME,CODE,PARENT_ID,SEQ) values('1','Hopi公司','H
 insert into HW_DEPARTMENT(ID,NAME,CODE,PARENT_ID,SEQ) values('2','管理层','GLC','1',1);
 
 --岗位
-insert into HW_POSITION(ID,DEPARTMENT_ID,NAME,CODE,STATUS) values('0','1','系统管理员','administrator','6');
+insert into HW_POSITION(ID,DEPARTMENT_ID,NAME,CODE,STATUS) values('0','1','系统管理员','administrator','0030');
 
 --人员,密码加密方法为MD5,'admin789'加密后为'8ddb74115757af42cf89ef3826ee7e44','111111'加密后为'9cc6cdd82aa1cb48c185f000e00bf1e5'
-insert into HW_STAFF(ID,LOGIN_NAME,PASSWORD,STATUS,NAME,DEPARTMENT_ID) values('0','admin','9cc6cdd82aa1cb48c185f000e00bf1e5','3','系统管理员','1');
+insert into HW_STAFF(ID,LOGIN_NAME,PASSWORD,STATUS,NAME,DEPARTMENT_ID) values('0','admin','9cc6cdd82aa1cb48c185f000e00bf1e5','0020','系统管理员','1');
 
 --人员岗位
 insert into HW_STAFF_POSITION(STAFF_ID,POSITION_ID) values('0','0');
@@ -35,29 +35,29 @@ insert into HW_POSITION_ROLE(POSITION_ID,ROLE_ID) values('0','0');
 insert into HW_POSITION_ROLE(POSITION_ID,ROLE_ID) values('0','1');
 insert into HW_POSITION_ROLE(POSITION_ID,ROLE_ID) values('0','2');
 
---菜单资源
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('0','root','root','2',1,'0','',0);
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('1','功能菜单','GNCD','2',2,'0','',0);
 
+--菜单资源
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('root','root','root','0011',1,'root','',0);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('1','功能菜单','GNCD','0011',2,'root','',0);
 --权限资源
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('98','认证资源','ALL','1',98,'1','/*.do?method=*',1);
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('99','匿名资源','ANONYMOUS','1',99,'1','/**',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('98','认证资源','ALL','0010',98,'1','/*.do?method=*',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('99','匿名资源','ANONYMOUS','0010',99,'1','/**',1);
+
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('2','系统设置','XTGL','0011',1,'1','',0);
+
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('20','类型字典','LXZD','0011',1,'2','Hopi.common.DictTypePanel',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('21','图标类别管理','TBLB','0011',2,'2','Hopi.common.IconClassPanel',1);
+
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('30','部门管理','BMGL','0011',3,'2','Hopi.common.DepartmentPanel',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('31','岗位管理','GWGL','0011',4,'2','Hopi.common.PositionPanel',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('32','角色管理','JSGL','0011',5,'2','Hopi.common.RolePanel',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('33','人员管理','RYGL','0011',6,'2','Hopi.common.StaffPanel',1);
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('34','权限管理','QXGL','0011',7,'2','Hopi.common.ResourcePanel',1);
+
 
 --角色资源
 insert into HW_ROLE_RESOURCE(ROLE_ID,RESOURCE_ID,MASK) values('2','98',1);
 insert into HW_ROLE_RESOURCE(ROLE_ID,RESOURCE_ID,MASK) values('1','99',1);
-
-
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('2','系统设置','XTGL','2',1,'1','',0);
-
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('20','类型字典','LXZD','2',1,'2','Hopi.common.DictTypePanel',1);
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('21','图标类别管理','TBLB','2',2,'2','Hopi.common.IconClassPanel',1);
-
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('30','部门管理','BMGL','2',3,'2','Hopi.common.DepartmentPanel',1);
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('31','岗位管理','GWGL','2',4,'2','Hopi.common.PositionPanel',1);
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('32','角色管理','JSGL','2',5,'2','Hopi.common.RolePanel',1);
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('33','人员管理','RYGL','2',6,'2','Hopi.common.StaffPanel',1);
-insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('34','权限管理','QXGL','2',7,'2','Hopi.common.ResourcePanel',1);
 
 
 --insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('5','人员组织管理','RYGL','2',3,'2','Hopi.common.OrgPanel',1);

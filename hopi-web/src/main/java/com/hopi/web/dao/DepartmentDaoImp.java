@@ -23,7 +23,7 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao {
 		sql.append(" from HW_DEPARTMENT t1");
 		sql.append(" left join HW_DEPARTMENT t2 on t1.ID = t2.PARENT_ID");		
 		sql.append(" where t1.parent_id=:parentId");
-		if (WebConstants.DEPARTMENT_ROOT.equalsIgnoreCase(parentId)) {
+		if (WebConstants.TREE_ROOT_ID.equalsIgnoreCase(parentId)) {
 			// 如果是忽略根节点本身
 			sql.append(" and t1.id<>:parentId");
 		}
@@ -72,7 +72,7 @@ public class DepartmentDaoImp extends BaseDao implements DepartmentDao {
 		String sql="select ID,NAME,CODE,ICON_CLASS,SEQ from HW_DEPARTMENT where PARENT_ID=:parentId and ID<>:rootId order by SEQ";
 		Map param=new HashMap();
 		param.put("parentId", parentId);
-		param.put("rootId", WebConstants.DEPARTMENT_ROOT);
+		param.put("rootId", WebConstants.TREE_ROOT_ID);
 		List data=this.queryForListAll(sql, param);
 		List resultData=new ArrayList();
 		for(Iterator it=data.iterator();it.hasNext();){

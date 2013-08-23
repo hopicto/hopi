@@ -58,9 +58,10 @@ public class ResourceDaoImp extends BaseDao implements ResourceDao {
 			throws DataAccessException {
 		StringBuffer sql = new StringBuffer(
 				"select ID,NAME,SEQ,ICON_CLASS from HW_RESOURCE");
-		sql.append(" where TYPE=:type and PARENT_ID=:parentId order by SEQ");
+		sql.append(" where TYPE=:type and PARENT_ID=:parentId and ID<>:rootId order by SEQ");
 		Map param = new HashMap();
 		param.put("parentId", parentId);
+		param.put("rootId", WebConstants.TREE_ROOT_ID);
 		param.put("type", WebConstants.RESOURCE_TYPE_MENU);
 		List rawData = this.queryForListAll(sql.toString(), param);
 		List newData = new ArrayList();
@@ -81,6 +82,7 @@ public class ResourceDaoImp extends BaseDao implements ResourceDao {
 				leaf = false;
 			}
 			nm.put("leaf", leaf);
+			nm.put("expanded", true);
 			newData.add(nm);
 		}
 		return newData;

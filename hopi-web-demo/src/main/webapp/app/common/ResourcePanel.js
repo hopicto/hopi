@@ -7,6 +7,7 @@ Ext.define('Hopi.common.ResourcePanel', {
 	loadMask : true,
 	useArrows : true,
 	columnLines : true,
+	stripeRows : true,
 	rowLines : true,
 	rootVisible : false,
 	animate : false,	
@@ -66,6 +67,9 @@ Ext.define('Hopi.common.ResourcePanel', {
 	createForm : function() {
 		var iconClassCombo = Ext.create('Hopi.common.IconClassCombo', {
 			name : 'ICON_CLASS'
+		});
+		var dictTypeCombo = Ext.create('Hopi.common.DictTypeCombo', {
+			code:'RESOURCE_TYPE'
 		});
 		var fp = Ext.create('Ext.form.FormPanel', {
 			frame : true,

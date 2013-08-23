@@ -30,8 +30,7 @@ public class WebConstants {
 	public static final String EXCEL_VIEW_DATA_CONFIG = "dataConfig";
 	public static final String EXCEL_VIEW_DATA = "data";
 
-	// 树型菜单根节点ID
-	public static final String TREE_ROOT = "1";
+	
 
 	public static final String SUCCESS = "success";
 	public static final String JSON_CLEAN = "_jsonclean"; // 用户树形菜单直接输出json，不封装success
@@ -92,8 +91,11 @@ public class WebConstants {
 
 	public static final String USER_ADMIN = "0";// 系统管理员ID
 
-	public static final String DEPARTMENT_ROOT = "root";// 部门根节点ID
-
+	public static final String TREE_ROOT_ID = "root";//树状数据根节点ID
+	
+//	// 树型菜单根节点ID
+//	public static final String TREE_ROOT = "1";
+	
 	// 高级查询前缀
 	public static final String HIGH_SEARCH_PREFIX = "HS_";
 
