@@ -12,6 +12,7 @@
     <module>hopi-util</module>
     <module>hopi-web</module>
     <module>hopi-db</module>
+    <module>hopi-web-demo</module>
   </modules>
   <build>
 		<pluginManagement>
