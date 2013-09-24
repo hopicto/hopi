@@ -19,3 +19,6 @@ mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=co
 mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeId=maven-archetype-quickstart -DarchetypeVersion=1.1 -DgroupId=com.hopi -DartifactId=hopi-db
 
 mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.hopi -DartifactId=hopi-db
+
+邮件群发
+mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeId=maven-archetype-quickstart -DarchetypeVersion=1.1 -DgroupId=com.hopi -DartifactId=hopi-xmail

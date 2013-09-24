@@ -13,6 +13,7 @@
     <module>hopi-web</module>
     <module>hopi-db</module>
     <module>hopi-web-demo</module>
+    <module>hopi-xmail</module>
   </modules>
   <build>
 		<pluginManagement>
