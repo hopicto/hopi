@@ -54,7 +54,7 @@ insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('32
 insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('33','人员管理','RYGL','0011',6,'2','Hopi.common.StaffPanel',1);
 insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('34','权限管理','QXGL','0011',7,'2','Hopi.common.ResourcePanel',1);
 
-
+insert into HW_RESOURCE(ID,NAME,CODE,TYPE,SEQ,PARENT_ID,CONTENT,LEAF) values('97','画图测试','HTCS','0011',97,'2','Hopi.draw.DrawPanel',1);
 --角色资源
 insert into HW_ROLE_RESOURCE(ROLE_ID,RESOURCE_ID,MASK) values('2','98',1);
 insert into HW_ROLE_RESOURCE(ROLE_ID,RESOURCE_ID,MASK) values('1','99',1);
