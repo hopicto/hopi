@@ -1,6 +1,15 @@
 Ext.define('Hopi.draw.DrawNode', {
 	extend : 'Ext.draw.Component',
-	
+	items:[{
+		type : 'rect',
+		width : 100,
+		height : 50,
+		radius : 10,
+		zIndex : 1,
+		opacity : 0.5,
+		stroke : 'blue',
+		'stroke-width' : 1
+	}],
 	contentTpl : new Ext.XTemplate('<tpl for="props">',
 			'{name}\t{type}\t{key}\n', '</tpl>'),
 	caculateHeight : function() {
@@ -19,16 +28,17 @@ Ext.define('Hopi.draw.DrawNode', {
 	},
 	initComponent : function() {
 		this.callParent();
-		this.surface.add({
-			type : 'rect',
-			width : 100,
-			height : 50,
-			radius : 10,
-			zIndex : 1,
-			opacity : 0.5,
-			stroke : 'blue',
-			'stroke-width' : 1
-		});
+//		console.log(this);
+//		this.surface.add({
+//			type : 'rect',
+//			width : 100,
+//			height : 50,
+//			radius : 10,
+//			zIndex : 1,
+//			opacity : 0.5,
+//			stroke : 'blue',
+//			'stroke-width' : 1
+//		});
 	}
 // constructor : function(config) {
 // Ext.apply(config, {
