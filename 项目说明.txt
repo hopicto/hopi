@@ -1,0 +1,24 @@
+hopi
+
+数据库访问
+mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.hopi -DartifactId=hopi-dao
+
+工具类
+mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.hopi -DartifactId=hopi-util
+
+web应用
+mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.hopi -DartifactId=hopi-web
+
+web demo
+mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.hopi -DartifactId=hopi-web-demo
+
+hopi query
+mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.hopi -DartifactId=hopi-query
+
+数据库设计
+mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeId=maven-archetype-quickstart -DarchetypeVersion=1.1 -DgroupId=com.hopi -DartifactId=hopi-db
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.hopi -DartifactId=hopi-db
+
+邮件群发
+mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeId=maven-archetype-quickstart -DarchetypeVersion=1.1 -DgroupId=com.hopi -DartifactId=hopi-xmail

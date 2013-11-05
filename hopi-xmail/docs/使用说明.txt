@@ -1,0 +1,68 @@
+目录结构
+repo 运行依赖包
+bin	可执行目录
+	st_fgs.bat 发送分公司邮件
+	st_yyb.bat 发送营业部邮件	
+	发送数据	待发送的附件列表，分为分公司和营业部两种类别，每个目录下均以营业部或分公司名称建立目录。
+					目录下的全部文件会作为邮件附件发送出去。营业部名称需与config.xml中的营业部分组名保持一致。
+	config	配置目录
+	config/邮件标题.ftl 邮件标题模版文件
+	config/邮件正文.ftl 邮件正文模版文件
+	config/context-config.xml 主配置文件
+	主要修改以下内容
+	<bean id="xmailConfig" class="com.hopi.xmail.XmailConfig">
+		<!--设置邮件服务器，发送邮件帐号和显示名称 -->
+		<property name="sendFromMap">
+			<map>
+				<entry key="host" value="mail.xyzq.com.cn" />
+				<entry key="port" value="25" />
+				<entry key="username" value="dongyl" />
+				<entry key="password" value="***" />
+				<entry key="sendFrom" value="dongyl@xyzq.com.cn" />
+				<entry key="sendFromName" value="董依良" />
+			</map>
+		</property>
+		<!--设置默认抄送，发送所有邮件均会抄送以下地址，用于自我提示 -->
+		<property name="defaultCc">
+			<set>
+				<value>test1@xyzq.com.cn</value>
+				<value>dongyl@xyzq.com.cn</value>
+			</set>
+		</property>
+		<!--邮件显示名称映射关系，一个地址对应一个显示名称，避免只显示邮件地址而不显示名称 -->
+		<property name="userList">
+			<map>
+				<entry key="dongyl@xyzq.com.cn" value="董依良" />
+			</map>
+		</property>
+		<!--邮件接收分组，分组名需与发送数据下的具体类别目录对应，不匹配的不发送-->
+		<property name="mailGroup">
+			<map>
+				<entry key="分公司">
+					<map>
+						<entry key="北京分公司">
+							<set>
+								<value>dongyl@xyzq.com.cn</value>
+								<value>test1@xyzq.com.cn</value>
+								<value>test2@xyzq.com.cn</value>
+							</set>
+						</entry>
+						<entry key="西南分公司">
+							<set>
+								<value>dongyl@xyzq.com.cn</value>
+							</set>
+						</entry>
+					</map>
+				</entry>
+				<entry key="营业部">
+					<map>
+						<entry key="上海民生">
+							<set>
+								<value>dongyl@xyzq.com.cn</value>
+							</set>
+						</entry>
+					</map>
+				</entry>
+			</map>
+		</property>
+	</bean>
